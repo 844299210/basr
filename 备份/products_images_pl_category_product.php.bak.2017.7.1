@@ -1,0 +1,824 @@
+<?php
+  require('includes/application_top.php');
+  require DIR_WS_CLASSES . 'fiberstore_all_categories_list.php';
+  require DIR_WS_CLASSES . 'ftp_class.php';
+ 
+  $all_category = explode("_",$_GET['cPath']) ; 
+   
+  $curent_page0 = (int)$_GET['page'] ? (int)$_GET['page'] : '1' ;
+  $curent_page1 = (int)$_GET['page'] ? (int)$_GET['page'] : '1' ;
+  $curent_page2 = (int)$_GET['page'] ? (int)$_GET['page'] : '1' ;
+  
+ // $current_category_id
+  $action = (isset($_GET['action']) ? $_GET['action'] : '');
+  
+  switch ($action){
+ 
+	case 'article_upload_image':
+	// 存放图片的分类
+	//$categories_id = $_POST['categories_id'];	
+    // 当前的分类
+	$current_category_id = $_POST['current_category_id'];
+	$cPath = $_POST['cPath'];
+	
+	if ($current_category_id && $cPath) {
+
+		if($_FILES['doc_article_description_image']['name']){
+
+		    require_once(DIR_WS_CLASSES.'uploads.php');
+		    $fileFormat = array('jpg','png','gif','bmp','jpeg');
+
+            $uplode_dir = 'ckfinder/ftp_images/product';
+
+			if(is_dir(DIR_FS_CATALOG_IMAGES .$uplode_dir) == false){
+				mkdir(DIR_FS_CATALOG_IMAGES .$uplode_dir,0777);
+			}
+
+		$savepath = DIR_FS_CATALOG_IMAGES .$uplode_dir."/";// 上传的文件存放目录,注:chmod 777 upload
+		$maxsize = 0; //上传文件大小限制
+		$overwrite = 0; //0. no 1. yes
+		$f = new Uploads( $savepath, $fileFormat, $maxsize, $overwrite);
+		if ($f->run('doc_article_description_image',1)){
+		$info = $f->returnArray;
+
+		if($info){
+				foreach($info as $key=>$v){
+
+					$pic_name = strtolower(str_replace(' ', '-', $v['saveName']));
+					$saveName = $uplode_dir.'/'.$pic_name;
+
+					$db->query("insert into categories_additional_images set categories_id = '$current_category_id',image='$saveName',type=1");
+	
+					//上传文件到国外服务器
+			        // $ftp_server = FOREIGN_FTP_IP;
+					// $ftp_user = FOREIGN_FTP_USERNAME;
+					// $ftp_pass = FOREIGN_FTP_PASSWORD;
+					// set up a connection or die
+					// $conn_id = ftp_connect($ftp_server) or die(" 服务器连接失败  $ftp_server");
+					// $login_result = ftp_login($conn_id, $ftp_user, $ftp_pass);
+					// ftp_pasv($conn_id,TRUE);   //被动传输模式
+					
+					// if ((!$conn_id) || (!$login_result)) { 
+					        // echo "FTP connection has failed!";
+					        // exit; 
+					    // } else {
+					     //   echo "连接服务器成功";
+					    // }
+					// try to login
+					 // $filename=$v['saveName'];
+					// $source_file="120.24.215.173:8006/New_Fiberstore_Manager_2015/images/products_pdf/".$filename;  //本服务器文件目录
+					 // $source_file = "http://120.24.215.173:8006/images/".$saveName;
+
+					 // $folder_path = '/images/'.$uplode_dir;
+			         // $destination_file=$folder_path."/".$pic_name;  //远程服务器目录
+					 
+					 // fopen($source_file, 'r');					 
+					 
+				     // if(!ftp_chdir($conn_id, $folder_path)){
+						    // $create_folder = ftp_mkdir($conn_id, $folder_path);
+						    // ftp_chmod($conn_id, 0777, $folder_path);
+					 // }					 
+		
+			         // $ret = ftp_nb_put ($conn_id,$destination_file,$source_file,FTP_BINARY);				
+						
+						// while ($ret == FTP_MOREDATA) {
+						   //加入其它要执行的代码
+						   // echo ".";
+						   //继续传送...
+						   // $ret = ftp_nb_continue ($conn_id);
+						// }
+						// if ($ret != FTP_FINISHED) {
+						   // echo "上传文件中发生错误...";
+						   // exit(1);
+						// }
+					 
+					 // ftp_quit($conn_id);
+					 //上传国外结束
+					 
+					 	//上传文件到中文站
+			        $ftp_server = CHAIN_FTP_IP;
+					$ftp_user = CHAIN_FTP_USERNAME;
+					$ftp_pass = CHAIN_FTP_PASSWORD;
+					// set up a connection or die
+					$conn_id = ftp_connect($ftp_server) or die(" 服务器连接失败  $ftp_server");
+					$login_result = ftp_login($conn_id, $ftp_user, $ftp_pass);
+					ftp_pasv($conn_id,TRUE);   //被动传输模式
+					
+					if ((!$conn_id) || (!$login_result)) { 
+					        echo "FTP connection has failed!";
+					        exit; 
+					    } else {
+					     //   echo "连接服务器成功";
+					    }
+					// try to login
+					 $filename=$v['saveName'];
+					// $source_file="120.24.215.173:8006/New_Fiberstore_Manager_2015/images/products_pdf/".$filename;  //本服务器文件目录
+					 $source_file = "http://test.whgxwl.com:8000/images/".$saveName;
+
+					 $folder_path = '/images/'.$uplode_dir;
+			         $destination_file=$folder_path."/".$pic_name;  //远程服务器目录
+					 
+					 fopen($source_file, 'r');
+
+				     if(!ftp_chdir($conn_id, $folder_path)){
+						    $create_folder = ftp_mkdir($conn_id, $folder_path);
+						    ftp_chmod($conn_id, 0777, $folder_path);
+					 }
+		
+			         $ret = ftp_nb_put ($conn_id,$destination_file,$source_file,FTP_BINARY);
+						
+						while ($ret == FTP_MOREDATA) {
+						   // 加入其它要执行的代码
+						   echo ".";
+						   // 继续传送...
+						   $ret = ftp_nb_continue ($conn_id);
+						}
+						if ($ret != FTP_FINISHED) {
+						   echo "上传文件中中文站发生错误...";
+						   exit(1);
+						}
+					 
+					ftp_quit($conn_id);
+					
+					//ftp_close($conn_id);  
+					//上传结束					
+					
+				}
+		}
+
+		   $messageStack->add_session('上传成功', 'success');
+		}else{ $messageStack->add_session($f->errmsg(),'fail');	}
+	}else{  $messageStack->add_session('上传失败', 'fail'); }		 
+	
+	}else{ $messageStack->add_session('上传失败', 'fail'); }	
+      zen_redirect(zen_href_link('products_images_pl_category_product.php','cPath='.$cPath,'NONSSL'));
+    break; 
+  
+  
+  case 'remove_picture':
+  
+ 	$additional_images_id = $_POST['additional_images_id'];
+ 	
+ 	if ($additional_images_id) {
+ 	     $result = $db->Execute("select type,image  from  categories_additional_images
+                                where  additional_images_id =". (int)$additional_images_id ); 
+ 	     if ($result->fields['image']) {
+
+           //删除后台服务器
+ 	       if ($result->fields['type'] == 0) {
+ 	       	 //产品多图的删除
+ 	         $is_delete_pic = $db->Execute("select  additional_images_id  from  products_additional_images
+ 	          	                            where  image ='".$result->fields['image']."'" ); 
+ 	         if ($is_delete_pic->fields['additional_images_id']) {
+ 	          	  // 如果图片已被使用  则不能删除图片
+ 	         }else{
+ 	          	  unlink(DIR_FS_CATALOG.'images/'.$result->fields['image']);
+ 	          	  }
+ 	       }elseif ($result->fields['type'] == 1){
+ 	              unlink(DIR_FS_CATALOG.'images/'.$result->fields['image']);
+ 	       }elseif ($result->fields['type'] == 2){
+ 	              unlink(DIR_FS_CATALOG.'images/'.$result->fields['image']);
+ 	       }
+ 	       
+             //删除远程  服务器的图片
+ 	         $path_file_name = '/images/'.$result->fields['image'];    
+
+		     $ftp_en = new ftp();
+		     if (!$ftp_en->connect()) {  echo '英文站    ftp 链接失败 请联系管理员' ; exit(); }		     
+		     $ftp_cn = new ftp(CHAIN_FTP_IP,CHAIN_FTP_USERNAME,CHAIN_FTP_PASSWORD);
+		     if (!$ftp_cn->connect()) {  echo '中文站    ftp 链接失败 请联系管理员' ; exit(); }
+		      	     	     
+		     $ftp_en->del_file($path_file_name) ;
+		     $ftp_cn->del_file($path_file_name) ; 
+ 
+		     $ftp_en->ftp_quit() ;
+		     $ftp_cn->ftp_quit() ;    		     	     
+   	          	     
+ 	        $db->query("delete from categories_additional_images where additional_images_id = '".(int)$additional_images_id."'"); 
+ 	        exit('ok');     
+ 	     }  
+ 	}
+    exit('fail');
+  break ;
+
+	case 'upload_pl':
+	// 存放图片的分类
+	$categories_id = $_POST['categories_id'];	
+    // 当前的分类
+	$current_category_id = $_POST['current_category_id'];
+	$cPath = $_POST['cPath'];
+	
+	if ($categories_id && $current_category_id && $cPath) {
+	
+		if($_FILES['upload_image_pl']['name']){
+
+		    require_once(DIR_WS_CLASSES.'uploads.php');
+		    $fileFormat = array('jpg','png','gif','bmp');
+
+			$result = $db->Execute("SELECT  categories_name FROM categories_description WHERE categories_id = '".$categories_id."' AND language_id=1 LIMIT 1");
+			$categories_name = $result->fields['categories_name'];
+			$categories_name = str_replace(' ','-',$categories_name);
+			$categories_name = str_replace('/','-',$categories_name);
+
+	        $uplode_dir = $categories_name;
+
+			if(is_dir(DIR_FS_CATALOG_IMAGES .$uplode_dir) == false){
+				mkdir(DIR_FS_CATALOG_IMAGES .$uplode_dir,0777);
+			}
+
+		$savepath = DIR_FS_CATALOG_IMAGES .$uplode_dir."/";// 上传的文件存放目录,注:chmod 777 upload
+		$maxsize = 0; //上传文件大小限制
+		$overwrite = 0; //0. no 1. yes 
+			
+//		$folder_path = '/images/'.$uplode_dir.'/';    // ftp 远程 目录  不是文件
+//		echo 'this is a test'.'<br>';
+//		echo $folder_path;
+//		exit();	
+
+		$f = new Uploads( $savepath, $fileFormat, $maxsize, $overwrite);
+		
+		if ($f->run('upload_image_pl',1)){
+
+		$info = $f->returnArray;
+
+		if($info){
+		
+		     $folder_path = '/images/'.$uplode_dir.'/';    // ftp 远程 目录  不是文件
+
+		     // $ftp_en = new ftp();
+		     // if (!$ftp_en->connect()) {  echo '英文站    ftp 链接失败 请联系管理员' ; exit(); }
+		     // if (!$ftp_en->set_path($folder_path)) {  echo '英文站    ftp设置路径失败 请联系管理员' ; exit(); }
+
+
+		     $ftp_cn = new ftp(CHAIN_FTP_IP,CHAIN_FTP_USERNAME,CHAIN_FTP_PASSWORD);
+		     if (!$ftp_cn->connect()) {  echo '中文站    ftp 链接失败 请联系管理员' ; exit(); }
+		     if (!$ftp_cn->set_path($folder_path)) {  echo '中文站    ftp设置路径失败 请联系管理员' ; exit(); }
+
+		     $tras_falg = false ;
+		     
+			 	foreach($info as $key=>$v){
+						
+					$pic_name = $v['saveName'] ;
+					$saveName = $uplode_dir.'/'.$pic_name;
+					
+// 					echo '文件名:'.$pic_name.'<br>';
+// 					echo '远程路径:'.$ftp_en->ftp_path .'<br>';
+// 					echo '本地路径:'.$savepath.'<br>';
+// 					if (!file_exists($savepath.$pic_name)) {
+// 						echo '本地文件'.$savepath.$pic_name.'不存在<br>';
+// 					}
+					
+					//  传一个本地路径     和  文件名
+					// if (!$ftp_en->transform_file($savepath,$pic_name)) {
+						
+					//	echo '文件传输失败<br>';
+					//	echo '目录:'.ftp_pwd ($ftp_en->conn_id).'<br>';
+						
+						// if ($pic_name && file_exists($savepath.$pic_name)) {
+							// unlink($savepath.$pic_name);
+						// }
+						// $tras_falg = true ;
+						// continue ;
+					// }
+					
+					if (!$ftp_cn->transform_file($savepath,$pic_name)) {
+						$tras_falg = true ;
+						continue ;
+					}
+					 
+					$db->query("insert into categories_additional_images set categories_id = '$current_category_id',image='$saveName',type=0");
+	
+				}  
+				
+		     // $ftp_en->ftp_quit() ;
+		     $ftp_cn->ftp_quit() ;
+		
+		     if ($tras_falg) {
+		       $messageStack->add_session('部分文件传输失败   请检查上传的文件', 'success');;
+		     }else{
+		       $messageStack->add_session('上传成功', 'success');
+		     }
+		     
+		}
+
+		   
+		}else{ $messageStack->add_session($f->errmsg(),'fail');	}
+	}else{  $messageStack->add_session('上传失败', 'fail'); }		 
+	
+	}else{ $messageStack->add_session('上传失败', 'fail'); }	
+      zen_redirect(zen_href_link('products_images_pl_category_product.php','cPath='.$cPath,'NONSSL'));
+    break;
+    
+ // article_upload_pdf   
+	case 'article_upload_pdf':
+		// 当前的分类
+		$current_category_id = $_POST['current_category_id'];
+		$cPath = $_POST['cPath'];
+		
+		if ($current_category_id && $cPath) {
+
+			if($_FILES['doc_article_description_pdf']['name']){
+
+				require_once(DIR_WS_CLASSES.'uploads.php');
+				$fileFormat = array('jpg','png','gif','bmp','jpeg','pdf','PDF','rar','zip');
+				
+				$uplode_dir = 'PDF';
+				if(is_dir(DIR_FS_CATALOG_IMAGES .$uplode_dir) == false){
+					mkdir(DIR_FS_CATALOG_IMAGES .$uplode_dir,0777);
+				}
+
+				$savepath = DIR_FS_CATALOG_IMAGES .$uplode_dir."/";// 上传的文件存放目录,注:chmod 777 upload
+				$maxsize = 0; //上传文件大小限制
+				$overwrite = 0; //0. no 1. yes
+
+				$f = new Uploads($savepath, $fileFormat, $maxsize, $overwrite);
+				
+				//if ($f->run('doc_article_description_pdf',1)){
+				if ($f->run('doc_article_description_pdf',3)){
+
+					$info = $f->returnArray;
+
+					if($info){
+						foreach($info as $key=>$v){
+
+							$pic_name = strtolower(str_replace(' ', '-', $v['saveName']));
+							$saveName = $uplode_dir.'/'.$pic_name;
+
+							$db->query("insert into categories_additional_images set categories_id = '$current_category_id',image='$saveName',type=2");
+															
+							//上传文件到国外服务器
+							// $ftp_server = FOREIGN_FTP_IP;
+							// $ftp_user = FOREIGN_FTP_USERNAME;
+							// $ftp_pass = FOREIGN_FTP_PASSWORD;
+							// set up a connection or die
+							// $conn_id = ftp_connect($ftp_server) or die(" 服务器连接失败  $ftp_server");
+							// $login_result = ftp_login($conn_id, $ftp_user, $ftp_pass);
+							// ftp_pasv($conn_id,TRUE);   //被动传输模式
+						
+							// if ((!$conn_id) || (!$login_result)) { 
+								// echo "FTP connection has failed!";
+								// exit; 
+							// } else {
+							 //   echo "连接服务器成功";
+							// }
+							// try to login
+							// $filename=$v['saveName'];
+							// $source_file="120.24.215.173:8006/New_Fiberstore_Manager_2015/images/products_pdf/".$filename;  //本服务器文件目录
+							// $source_file = "http://120.24.215.173:8006/images/".$saveName;
+
+							// $folder_path = '/images/'.$uplode_dir;
+							// $destination_file=$folder_path."/".$pic_name;  //远程服务器目录
+						 
+							// fopen($source_file, 'r');					 
+						 
+							// if(!ftp_chdir($conn_id, $folder_path)){
+								// $create_folder = ftp_mkdir($conn_id, $folder_path);
+								// ftp_chmod($conn_id, 0777, $folder_path);
+							// }					 
+			
+							// $ret = ftp_nb_put ($conn_id,$destination_file,$source_file,FTP_BINARY);				
+							
+							// while ($ret == FTP_MOREDATA) {
+								//加入其它要执行的代码
+								// echo ".";
+								//继续传送...
+								// $ret = ftp_nb_continue ($conn_id);
+							// }
+							// if ($ret != FTP_FINISHED) {
+								// echo "上传文件中发生错误...";
+								// exit(1);
+							// }
+						 
+							// ftp_quit($conn_id);
+							//上传国外结束
+						 
+							//上传文件到中文站
+							$ftp_server = CHAIN_FTP_IP;
+							$ftp_user = CHAIN_FTP_USERNAME;
+							$ftp_pass = CHAIN_FTP_PASSWORD;
+							// set up a connection or die
+							$conn_id = ftp_connect($ftp_server) or die(" 服务器连接失败  $ftp_server");
+							$login_result = ftp_login($conn_id, $ftp_user, $ftp_pass);
+							ftp_pasv($conn_id,TRUE);   //被动传输模式
+						
+							if ((!$conn_id) || (!$login_result)) { 
+								echo "FTP connection has failed!";
+								exit; 
+							} else {
+							 //   echo "连接服务器成功";
+							}
+							// try to login
+							$filename=$v['saveName'];
+							// $source_file="120.24.215.173:8006/New_Fiberstore_Manager_2015/images/products_pdf/".$filename;  //本服务器文件目录
+							$source_file = "http://test.whgxwl.com:8000/images/".$saveName;
+
+							$folder_path = '/images/'.$uplode_dir;
+							$destination_file=$folder_path."/".$pic_name;  //远程服务器目录
+						 
+							fopen($source_file, 'r');
+
+							if(!ftp_chdir($conn_id, $folder_path)){
+								$create_folder = ftp_mkdir($conn_id, $folder_path);
+								ftp_chmod($conn_id, 0777, $folder_path);
+							}
+			
+							$ret = ftp_nb_put ($conn_id,$destination_file,$source_file,FTP_BINARY);
+							
+							while ($ret == FTP_MOREDATA) {
+							   // 加入其它要执行的代码
+							   echo ".";
+							   // 继续传送...
+							   $ret = ftp_nb_continue ($conn_id);
+							}
+							if ($ret != FTP_FINISHED) {
+							   echo "上传文件中中文站发生错误...";
+							   exit(1);
+							}
+						 
+							ftp_quit($conn_id);
+						
+							//ftp_close($conn_id);  
+							//上传结束	
+							
+						}
+					}
+
+					$messageStack->add_session('上传成功', 'success');
+				}else{ $messageStack->add_session($f->errmsg(),'fail');	}
+			}else{  $messageStack->add_session('上传失败', 'fail'); }		 
+	
+		}else{ $messageStack->add_session('上传失败', 'fail'); }	
+		zen_redirect(zen_href_link('products_images_pl_category_product.php','cPath='.$cPath,'NONSSL'));
+    break; 
+
+ } 
+  
+  
+   $categories = $db->Execute("select  c.categories_id, cd.categories_name,c.categories_status
+                               from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd
+                                  where c.parent_id = '" . (int)$current_category_id . "'
+                                  and c.categories_id = cd.categories_id
+                                  and cd.language_id = '" . (int)$_SESSION['languages_id'] . "'" ); 
+   
+   if ($all_category[1]) {
+   
+          //   $curent_page0  $curent_page1
+          $max_display0 = 20 ;
+          $max_display1 = 20 ;
+          $max_display2 = 20 ;
+   
+          $sql0 = "select  additional_images_id,image  from  categories_additional_images
+                   where   categories_id =". (int)$current_category_id." AND type=0 order by  additional_images_id desc" ;            
+          $products_split = new splitPageResults($curent_page0, $max_display0, $sql0, $query_numrows0); 
+          $products = $db->Execute($sql0);   
+      
+          $sql1 = "select  additional_images_id,image  from  categories_additional_images
+                   where   categories_id =". (int)$current_category_id." AND type=1 order by  additional_images_id desc" ;           
+          $product_date_split = new splitPageResults($curent_page1, $max_display1, $sql1, $query_numrows1); 
+          $product_date = $db->Execute($sql1);  
+
+          $sql2 = "select  additional_images_id,image  from  categories_additional_images
+                   where   categories_id =". (int)$current_category_id." AND type=2 order by  additional_images_id desc" ;           
+          $product_pdf_split = new splitPageResults($curent_page2, $max_display2, $sql2, $query_numrows2); 
+          $product_pdf = $db->Execute($sql2);          
+
+          $num_pages0 = ceil($query_numrows0 / $max_display0);   //总共的页数 
+          $num_pages1 = ceil($query_numrows1 / $max_display1);   //总共的页数
+          $num_pages2 = ceil($query_numrows2 / $max_display2);   //总共的页数         
+   }
+   
+   
+   
+   //销售删除图片 pdf 的权限 ('Vivi','Shirley','Clara','Sunnie','Anne','Julia')
+//   if (in_array($_SESSION['admin_id'],array(76,115,92,80,79,100))) {
+//   	  $show_del_pdf = 1 ;
+//   }
+      $show_del_pdf = 1 ; 
+?>
+
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html <?php echo HTML_PARAMS; ?>>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo CHARSET; ?>">
+<title><?php echo TITLE; ?></title>
+<link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="all" id="hoverJS">
+<link rel="stylesheet" type="text/css" href="css/style.css" media="all" id="hoverJS">
+<style>
+.pic_tab { border-top:1px solid #dedede; margin:0; background:#fff; margin-top:-1px; padding-bottom:10px; }
+.pic_tab dt { border-bottom:1px dotted #dedede; display:block; padding:5px 15px; line-height:30px; font-weight:normal; }
+.pic_tab dt .pic_tab_01 { padding-right:100px; }
+.pic_tab dd { padding:15px 0; border-bottom:1px solid #dedede; }
+.pic_tab dd:before { display:none; }
+.pic_tab dd span.pic_tab_02 { float:left; position:relative;text-align:center; margin:0 10px 10px 10px; border: 1px solid #dedede; font-size:13px; }
+.pic_tab dd span.pic_tab_02 img { z-index:-1; }
+.pic_tab dd span.pic_tab_02 i { position:absolute; z-index:999; right:0; top:-1px; padding:11px; background-position:-307px 4px; cursor:pointer; background-color:#ccc; opacity:0.6; }
+.pic_tab dd span.pic_tab_02 p { text-align:left; padding:0 10px 10px 10px; margin:0; }
+.pic_tab dd span.pic_tab_02 em { display:none; float:left; position:absolute; z-index:999; top:58px; left:58px; padding:11px; background-position:-284px 4px; cursor:pointer; background-color:#393; opacity:0.6; border-radius:14px; }
+.pic_tab dd span.pic_tab_02:hover em { display:block; }
+.pic_tab dd img { margin-bottom:5px; width:100px; height:100px; }
+.pic_tab dd.dd_line { border-top:1px dotted #dedede; }
+.pic_tab .input-mini { width:80px; margin-right:6px; }
+.pic_tab_tit{ font-size: 16px; line-height:40px; font-weight:bold; padding:10px 0 0 10px;}
+</style>
+</head>
+<body >
+<?php require(DIR_WS_INCLUDES . 'header.php'); ?>
+<div class="fs_middle">
+  <div class="fs_middle_con">
+    <div class="link_title"> <span><a href="index.php">管理首页</a></span> / <span><a href="#">产品多图上传</a></span> </div>
+    <div class="product_images_tit">
+      <ul><li class="tit_h"><a href="<?php echo zen_href_link('products_images_pl_category_product', '', 'NONSSL');?>">图片上传<i></i></a></li>
+      <li><a href="<?php echo zen_href_link('products_images_pl');?>">产品多图上传<i></i></a></li></ul>
+     </div>
+    <div class="total_screening_n"> <span class="left"> <?php echo fiberstore_categories_class::show_categories('products_images_pl_category_product.php');?> </span> <span class="right" >
+      <?php if ($all_category[1]) { ?>
+      <a href="#myModal" data-toggle="modal">
+      <button class="btn">上传主多图</button>
+      </a>
+      <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onClick="clearCategories();">×</button>
+          <h3 id="myModalLabel">产品多图上传       上传到分类<?php echo  zen_get_categories_name($current_category_id); ?>下 </h3>
+        </div>
+        <form action = "?action=upload_pl" method="post" enctype="multipart/form-data" id="productImagePlSubmit">
+          <input type="hidden" name="categories_id" value="<?php echo $all_category[1];?>">
+          <input type="hidden" name="current_category_id" value="<?php echo $current_category_id;?>">
+          <input type="hidden" name="cPath" value="<?php echo $_GET['cPath'];?>">
+          <table width="100%" border="0" cellspacing="0" cellpadding="5"  class="parcel_size"  id='add_img'>
+            <tr>
+              <th>图片</th>
+              <th>添加</th>
+            </tr>
+            <tr>
+              <td><input name="upload_image_pl[]" type="file"  multiple /></td>
+              <td><a href="#" onClick="addNewRow()" title="点击添加"> <i class="icon_halflings new_plus"></i>添加图片 </a></td>
+            </tr>
+          </table>
+          <button class="btn btn-info">上传图片</button>
+        </form>
+      </div>
+      &nbsp;&nbsp;&nbsp; 
+       <a href="#myModal_1" data-toggle="modal">
+      <button class="btn">上传详情页面插图</button>
+      </a>
+      <div id="myModal_1" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onClick="clearCategories();">×</button>
+          <h3 id="myModalLabel">产品详情图片       上传到分类<?php echo  zen_get_categories_name($current_category_id); ?>下 </h3>
+        </div>
+        <form action = "?action=article_upload_image" method="post" enctype="multipart/form-data" id="productImagePlSubmit">
+          <input type="hidden" name="current_category_id" value="<?php echo $current_category_id;?>">
+          <input type="hidden" name="cPath" value="<?php echo $_GET['cPath'];?>">
+          <table width="100%" border="0" cellspacing="0" cellpadding="5"  class="parcel_size"  id='add_pic'>
+            <tr>
+              <th>图片</th>
+              <th>添加</th>
+            </tr>
+            <tr>
+              <td><input name="doc_article_description_image[]" type="file"  multiple /></td>
+              <td><a href="#" onClick="addNewRow_1()" title="点击添加"> <i class="icon_halflings new_plus"></i>添加图片 </a></td>
+            </tr>
+          </table>
+          <button class="btn btn-info">上传图片</button>
+        </form>
+      </div>     
+     
+      &nbsp;&nbsp;&nbsp;
+      <a href="#myModal_2" data-toggle="modal">
+      <button class="btn">上传PDF</button>
+      </a>
+      <div id="myModal_2" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onClick="clearCategories();">×</button>
+          <h3 id="myModalLabel">产品PDF上传到分类<?php echo  zen_get_categories_name($current_category_id); ?>下 </h3>
+        </div>
+        <form action = "?action=article_upload_pdf" method="post" enctype="multipart/form-data" id="productImagePlSubmit">
+          <input type="hidden" name="current_category_id" value="<?php echo $current_category_id;?>">
+          <input type="hidden" name="cPath" value="<?php echo $_GET['cPath'];?>">
+          <table width="100%" border="0" cellspacing="0" cellpadding="5"  class="parcel_size"  id='add_pdf'>
+            <tr>
+              <th>PDF</th>
+              <th>添加</th>
+            </tr>
+            <tr>
+              <td><input name="doc_article_description_pdf[]" type="file"  multiple /></td>
+              <td><a href="#" onClick="addNewRow_2()" title="点击添加"><i class="icon_halflings new_plus"></i>添加</a></td>
+            </tr>
+          </table>
+          <button class="btn btn-info">上传PDF</button>
+        </form>
+      </div>     
+
+      <?php }?>
+      </span> </div>
+    <div class="total_content">
+      <table width="100% " cellspacing="0" cellpadding="0" border="0" class="total_table">
+        <tr>
+          <th>ID</th>
+          <th>商品分类</th>
+          <th></th>
+          <th>状态</th>
+        </tr>
+        <?php     while (!$categories->EOF) {  ?>
+        <tr>
+          <td><?php echo $categories->fields['categories_id']; ?></td>
+          <td><?php echo '<a href="' . zen_href_link('products_images_pl_category_product.php', zen_get_path($categories->fields['categories_id'])) . '">' . 
+            zen_image(DIR_WS_ICONS . 'folder.gif', ICON_FOLDER) . '&nbsp;<b>' . $categories->fields['categories_name'] . '</b></a>'; ?></td>
+          <td><?php
+                  $total_products = zen_get_products_to_categories($categories->fields['categories_id'], true);
+                  $total_products_on = zen_get_products_to_categories($categories->fields['categories_id'], false);
+                  echo $total_products_on . ' / ' . $total_products . ' 开启';  
+              ?></td>
+          <td><?php 
+		        if ($categories->fields['categories_status'] == '1') {
+		                echo  zen_image(DIR_WS_IMAGES . 'icon_green_on.gif', IMAGE_ICON_STATUS_ON) ;
+		        } else {
+		                echo zen_image(DIR_WS_IMAGES . 'icon_red_on.gif', IMAGE_ICON_STATUS_OFF) ;
+		        }     
+		       if (zen_get_products_to_categories($categories->fields['categories_id'], true, 'products_active') == 'true') {
+		                echo '&nbsp;&nbsp;' . zen_image(DIR_WS_IMAGES . 'icon_yellow_on.gif', IMAGE_ICON_LINKED);
+		       } ?></td>
+        </tr>
+        <?php    $categories->MoveNext();   }?>
+      </table>
+      <!--mark-->
+      
+      
+ <?php    if ($all_category[1]) {   ?>    
+      <div class="pic_tab"> 
+      
+ <?php  if ($_GET['page'] <= $num_pages0 && is_object($products) && $products->RecordCount()) { ?>     
+      <div class="pic_tab_tit">多图</div>
+        <dd>   
+<?php  
+          while (!$products->EOF) { 
+?>
+          <span class="pic_tab_02"> <img src="/images/<?php echo $products->fields['image'];?>" >
+          <i title="删除图片" class="icon-remove" id="img_<?php echo $products->fields['additional_images_id'];?>" onClick="img_remove(<?php echo $products->fields['additional_images_id'];?>)"></i>
+          <p><?php echo $products->fields['image'];?></p>
+          </span>
+          <?php           $products->MoveNext();
+             }      
+?>
+        </dd>  
+<?php   } ?>                  
+        
+<?php  if ($_GET['page'] <= $num_pages1 && is_object($product_date) &&  $product_date->RecordCount()) {  ?>            
+        <div class="pic_tab_tit">产品详情的图片</div>
+        <dd>
+<?php 
+          while (!$product_date->EOF) { 
+?>
+          <span class="pic_tab_02"> <img src="/images/<?php echo $product_date->fields['image'];?>" >
+          <i title="删除图片" class="icon-remove" id="img_<?php echo $product_date->fields['additional_images_id'];?>" onClick="img_remove(<?php echo $product_date->fields['additional_images_id'];?>)"></i>
+          <p><?php echo '/images/'.$product_date->fields['image'];?></p>
+          </span>
+          <?php         $product_date->MoveNext();
+             }      
+?>
+        </dd>       
+<?php   } ?>        
+    
+ <?php  if ($_GET['page'] <= $num_pages2 && is_object($product_pdf) &&  $product_pdf->RecordCount()) {  ?>            
+        <div class="pic_tab_tit">产品PDF</div>
+        <dd>
+<?php 
+          while (!$product_pdf->EOF) { 
+?>
+          <span class="pic_tab_02"> <img src="/images/pdf.png" >         
+          <?php if ($show_del_pdf == 1) {  ?>
+          <i title="删除pdf" class="icon-remove" id="img_<?php echo $product_pdf->fields['additional_images_id'];?>" onClick="img_remove(<?php echo $product_pdf->fields['additional_images_id'];?>)"></i>               
+          <?php }?>
+          <p><a target="_blank" href="<?php echo '/images/'.$product_pdf->fields['image'];?>">
+             <?php echo '/images/'.$product_pdf->fields['image'];?></a></p>
+          </span>
+          <?php $product_pdf->MoveNext();
+          }
+          ?>
+        </dd>       
+<?php   } ?>   
+    
+    
+      </div>
+<?php  } ?>           
+      
+<?php    if ($all_category[1]) { ?>     
+  <table border="0" width="100%" cellspacing="0" cellpadding="2">
+     <tr>  
+<?php   if ( $num_pages0 >= $num_pages1 && $num_pages0 >= $num_pages2) {  ?>
+                    <td class="smallText" >                                                    
+                    </td>
+                    <td class="smallText" align="right">
+                    <?php 
+                    echo $products_split->display_links($query_numrows0, $max_display0, MAX_DISPLAY_PAGE_LINKS, $_GET['page'], zen_get_all_get_params(array('page', 'info', 'x', 'y', 'cID','securityToken'))); 
+                    ?>
+                    </td>
+<?php 	}elseif ( $num_pages1 >= $num_pages0 && $num_pages1 >= $num_pages2){  ?>
+                    <td class="smallText" >
+                    </td>
+                    <td class="smallText" align="right">
+                    <?php 
+                    echo $products_split->display_links($query_numrows1, $max_display1, MAX_DISPLAY_PAGE_LINKS, $_GET['page'], zen_get_all_get_params(array('page', 'info', 'x', 'y', 'cID','securityToken'))); 
+                    ?>
+                    </td>
+<?php }else{  ?>
+                    <td class="smallText" >
+                    </td>
+                    <td class="smallText" align="right">
+                    <?php 
+                    echo $product_pdf_split->display_links($query_numrows2, $max_display2, MAX_DISPLAY_PAGE_LINKS, $_GET['page'], zen_get_all_get_params(array('page', 'info', 'x', 'y', 'cID','securityToken'))); 
+                    ?>
+                    </td>
+<?php } ?>        
+      </tr>
+  </table>      
+<?php  } ?>      
+      
+      <!--mark end--> 
+    </div>
+  </div>
+</div>
+<?php require(DIR_WS_INCLUDES . 'footer.php'); ?>
+<script type="text/javascript">
+
+function img_remove(additional_images_id){
+	if(confirm("是否删除?")){
+	$.ajax({
+		   type: "POST",
+		   url: "products_images_pl_category_product.php?action=remove_picture",
+		   data: "additional_images_id="+additional_images_id,
+		   dataType: "html",
+		   success: function(data){
+		       if(data == 'ok'){location.reload();}			   
+	   	   }
+	      })
+	}
+}
+
+//add_PDF
+function addNewRow_2(){  
+	var obj=document.getElementById('add_pdf');
+	var count=obj.rows.length;
+	var row=obj.insertRow(count-1);
+	var c0=row.insertCell(0);
+	c0.innerHTML='<input name="doc_article_description_pdf[]" type="file"  multiple />';
+	var c1=row.insertCell(1);
+		c1.innerHTML='<a href="javascript:void(0)" onclick="removeOrder_2(this)"><i class="icon_halflings new_delete"></i>删除</a>';		
+ }
+function removeOrder_2(fontobj){
+	if(confirm("确定删除?"))
+		{
+			var obj=document.getElementById('add_pdf');
+			var n=fontobj.parentNode.parentNode.rowIndex;
+			obj.deleteRow(n);
+		}
+}
+
+//add_pic
+function addNewRow_1(){  
+	var obj=document.getElementById('add_pic');
+	var count=obj.rows.length;
+	var row=obj.insertRow(count-1);
+
+	var c0=row.insertCell(0);
+	c0.innerHTML='<input name="doc_article_description_image[]" type="file"  multiple />';
+
+	var c1=row.insertCell(1);
+		c1.innerHTML='<a href="javascript:void(0)" onclick="removeOrder_1(this)"><i class="icon_halflings new_delete"></i>删除</a>';
+		
+ }
+function removeOrder_1(fontobj){
+	if(confirm("确定删除?"))
+		{
+			var obj=document.getElementById('add_pic');
+			var n=fontobj.parentNode.parentNode.rowIndex;
+			obj.deleteRow(n);
+		}
+}
+
+function addNewRow(){  
+	var obj=document.getElementById('add_img');
+	var count=obj.rows.length;
+	var row=obj.insertRow(count-1);
+
+	var c0=row.insertCell(0);
+	c0.innerHTML='<input name="upload_image_pl[]" type="file"  multiple />';
+
+	var c1=row.insertCell(1);
+		c1.innerHTML='<a href="javascript:void(0)" onclick="removeOrder(this)"><i class="icon_halflings new_delete"></i>删除</a>';
+		
+ }
+
+function removeOrder(fontobj){
+	if(confirm("确定删除?"))
+		{
+			var obj=document.getElementById('add_img');
+			var n=fontobj.parentNode.parentNode.rowIndex;
+			obj.deleteRow(n);
+		}
+}
+
+</script>
+</body>
+</html>
+<?php require(DIR_WS_INCLUDES . 'application_bottom.php'); ?>
