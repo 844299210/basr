@@ -1,0 +1,652 @@
+# For security reasons, Option followsymlinks cannot be overridden.
+Options +FollowSymLinks
+RewriteEngine on
+RewriteBase /
+#301
+RewriteCond %{http_host} ^fs.com
+RewriteRule ^(.*)$ http://www.fs.com/$1 [L,R=301]
+
+RewriteCond %{http_host} ^fiberstore.com
+RewriteRule ^(.*)$ http://www.fs.com/$1 [R=permanent,L]
+
+RewriteCond %{http_host} ^www.fiberstore.com
+RewriteRule ^(.*)$ http://www.fs.com/$1 [R=permanent,L]
+
+#301
+RewriteCond %{http_host} ^cdn.fiberstore.com
+RewriteRule ^(.*)$ http://www.fs.com/$1 [L,R=301]
+
+#301
+RewriteCond %{http_host} ^login.fiberstore.com
+RewriteRule ^(.*)$ https://www.fs.com/index.php?main_page=login&$1 [L,R=302]
+
+#RewriteCond %{SERVER_PORT} 443
+RewriteCond %{REQUEST_URI} !^/c/10g-media-converters_1045
+#RewriteRule .* http://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+
+#support---solution page --- fallwind 2016.9.26
+RewriteRule ^support/(.*)/([0-9]+)\.html$  index\.php?main_page=support&p=$2&%{QUERY_STRING} [L]
+
+#RewriteRule ^dwdm-long-haul-network-solution.html$ http://www.fs.com/specials/dwdm-long-haul-network-solution.html$1 [L,R=301]
+#RewriteRule ^fmu-cwdm-dwdm-mux-demux-solution\.html$ index\.php?main_page=fmu_cwdm_dwdm_mux_demux_solution [L]
+
+#2017-6-14 ternence
+RewriteRule ^fiber-patching-solution-specials-5.html$ http://www.fs.com/specials/fiber-patching-solution-specials-5.html$1 [L,R=301]
+RewriteRule ^fhd-series-patching-solution.html$ http://www.fs.com/specials/fhd-series-patching-solution.html$1 [L,R=301]
+RewriteRule ^copper-cable-assemblies-6.html$ http://www.fs.com/specials/copper-cable-assemblies-6.html$1 [L,R=301]
+RewriteRule ^cable-management-solutions-7.html$ http://www.fs.com/specials/cable-management-solutions-7.html$1 [L,R=301]
+RewriteRule ^light-armored-fiber-cable-solution-8.html$ http://www.fs.com/specials/light-armored-fiber-cable-solution-8.html$1 [L,R=301]
+RewriteRule ^mpo-mtp-cables-solutions-9.html$ http://www.fs.com/specials/mpo-mtp-cables-solutions-9.html$1 [L,R=301]
+RewriteRule ^custom-lc-uniboot-hd-plus-fiber-cables-10.html$ http://www.fs.com/specials/custom-lc-uniboot-hd-plus-fiber-cables-10.html$1 [L,R=301]
+RewriteRule ^bend-insensitive-fiber-cables-11.html$ http://www.fs.com/specials/bend-insensitive-fiber-cables-11.html$1 [L,R=301]
+RewriteRule ^fmu-cwdm-dwdm-mux-demux-solution-12.html$ http://www.fs.com/specials/fmu-cwdm-dwdm-mux-demux-solution-12.html$1 [L,R=301]
+RewriteRule ^bulk-fiber-cable-usa-19.html$ http://www.fs.com/specials/bulk-fiber-cable-usa-19.html$1 [L,R=301]
+RewriteRule ^jumpers-test-assured-program-21.html$ http://www.fs.com/specials/jumpers-test-assured-program-21.html$1 [L,R=301]
+RewriteRule ^why-microsoft-choose-fs-22.html$ http://www.fs.com/specials/why-microsoft-choose-fs-22.html$1 [L,R=301]
+RewriteRule ^concerning_polarity-specials-24$ http://www.fs.com/specials/concerning_polarity-specials-24$1 [L,R=301]
+RewriteRule ^concerning_polarity.html$ http://www.fs.com/specials/concerning_polarity.html$1 [L,R=301]
+RewriteRule ^40g-data-center-solutions.html$ http://www.fs.com/specials/40g-data-center-solutions.html$1 [L,R=301]
+RewriteRule ^fum_fmt.html$ http://www.fs.com/specials/fum_fmt.html$1 [L,R=301]
+RewriteRule ^dwdm-long-haul-network-solution.html$ http://www.fs.com/specials/dwdm-long-haul-network-solution.html$1 [L,R=301]
+RewriteRule ^base-8-connectivity-solutions.html$ http://www.fs.com/specials/base-8-connectivity-solutions.html$1 [L,R=301]
+RewriteRule ^copper.html$ http://www.fs.com/specials/copper.html$1 [L,R=301]
+RewriteRule ^patch_cable.html$ http://www.fs.com/specials/patch_cable.html$1 [L,R=301]
+RewriteRule ^patch_panel.html$ http://www.fs.com/specials/patch_panel.html$1 [L,R=301]
+
+RewriteRule ^specials/fiber-patching-solution-specials-5.html$ index\.php?main_page=fiber-patching-solution-specials-5 [L]
+RewriteRule ^specials/fhd-series-patching-solution.html$ index\.php?main_page=fhd-series-patching-solution [L]
+RewriteRule ^specials/copper-cable-assemblies-6.html$ index\.php?main_page=copper-cable-assemblies-6 [L]
+RewriteRule ^specials/cable-management-solutions-7.html$ index\.php?main_page=cable-management-solutions-7 [L]
+RewriteRule ^specials/light-armored-fiber-cable-solution-8.html$ index\.php?main_page=light-armored-fiber-cable-solution-8 [L]
+RewriteRule ^specials/mpo-mtp-cables-solutions-9.html$ index\.php?main_page=mpo-mtp-cables-solutions-9 [L]
+RewriteRule ^specials/custom-lc-uniboot-hd-plus-fiber-cables-10.html$ index\.php?main_page=custom-lc-uniboot-hd-plus-fiber-cables-10 [L]
+RewriteRule ^specials/bend-insensitive-fiber-cables-11.html$ index\.php?main_page=bend-insensitive-fiber-cables-11 [L]
+RewriteRule ^specials/fmu-cwdm-dwdm-mux-demux-solution-12.html$ index\.php?main_page=fmu-cwdm-dwdm-mux-demux-solution-12 [L]
+RewriteRule ^specials/bulk-fiber-cable-usa-19.html$ index\.php?main_page=bulk-fiber-cable-usa-19 [L]
+RewriteRule ^specials/jumpers-test-assured-program-21.html$ index\.php?main_page=jumpers-test-assured-program-21[L]
+RewriteRule ^specials/why-microsoft-choose-fs-22.html$ index\.php?main_page=why-microsoft-choose-fs-22 [L]
+RewriteRule ^specials/concerning_polarity-specials-24.html$ index\.php?main_page=concerning_polarity-specials-24 [L]
+RewriteRule ^specials/concerning_polarity.html$ index\.php?main_page=concerning_polarity [L]
+RewriteRule ^specials/40g-data-center-solutions.html$ index\.php?main_page=40g-data-center-solutions [L]
+RewriteRule ^specials/fum_fmt.html$ index\.php?main_page=fum_fmt [L]
+RewriteRule ^specials/dwdm-long-haul-network-solution.html$ dwdm-long-haul-network-solution [L]
+RewriteRule ^specials/base-8-connectivity-solutions.html$ index\.php?main_page=base-8-connectivity-solutions [L]
+RewriteRule ^specials/copper.html$ index\.php?main_page=specials/copper [L]
+RewriteRule ^specials/patch_cable.html$ index\.php?main_page=patch_cable [L]
+RewriteRule ^specials/patch_panel.html$ index\.php?main_page=patch_panel [L]
+
+
+#2017.3.20 fallwind
+#RewriteRule ^fhd-series-patching-solution\.html$ index\.php?main_page=fhd_series_patching_solution [L]
+RewriteRule ^fiber-patching-solution-specials-5\.html$ fhd-series-patching-solution.html [L,R=301]
+RewriteRule ^fhd-series-patching-solution\.html$ index\.php?main_page=fhd_series_patching_solution [L]
+
+#2017-5-3 fallwind	301		dwdm_long_haul_network_solution
+RewriteRule ^dwdm_long_haul_network_solution.html$ dwdm-long-haul-network-solution.html?$1 [L,R=301]
+RewriteRule ^dwdm-long-haul-network-solution.html$ index\.php?main_page=dwdm_long_haul_network_solution [L]
+
+#2017-5-10 fallwind	301		base
+RewriteRule ^base.html$ base-8-connectivity-solutions.html?$1 [L,R=301]
+RewriteRule ^base-8-connectivity-solutions.html$ index\.php?main_page=base [L]
+
+#2017-5-17   ery
+RewriteRule ^40g-data-center-solutions.html$ index\.php?main_page=40g_solution [L]
+
+
+# Finisar Categories Closed 2016-12-30
+RewriteRule ^c/(.*)(_|-)1675$ http://www.fs.com/c/generic-100base-sfp-1669 [L,R=301]
+RewriteRule ^c/(.*)(_|-)650$ http://www.fs.com/c/generic-10g-sfp-plus-1413 [L,R=301]
+RewriteRule ^c/(.*)(_|-)734$ http://www.fs.com/c/generic-1000base-sfp-1412 [L,R=301]
+RewriteRule ^c/(.*)(_|-)975$ http://www.fs.com/c/fhd-mtp-cassettes-2961 [L,R=301]
+
+# Finisar Avago etc. products closed 2016-01-13
+RewriteRule ^products/14943.html$ http://www.fs.com/products/11589.html?$1 [L,R=301]
+RewriteRule ^products/14945.html$ http://www.fs.com/products/11589.html?$1 [L,R=301]
+RewriteRule ^products/14946.html$ http://www.fs.com/products/11589.html?$1 [L,R=301]
+RewriteRule ^products/14949.html$ http://www.fs.com/products/11591.html?$1 [L,R=301]
+RewriteRule ^products/14950.html$ http://www.fs.com/products/11591.html?$1 [L,R=301]
+RewriteRule ^products/14952.html$ http://www.fs.com/products/11589.html?$1 [L,R=301]
+RewriteRule ^products/14953.html$ http://www.fs.com/products/11591.html?$1 [L,R=301]
+RewriteRule ^products/15496.html$ http://www.fs.com/products/11589.html?$1 [L,R=301]
+RewriteRule ^products/16058.html$ http://www.fs.com/products/29838.html?$1 [L,R=301]
+RewriteRule ^products/16451.html$ http://www.fs.com/products/37685.html?$1 [L,R=301]
+RewriteRule ^products/16452.html$ http://www.fs.com/products/37648.html?$1 [L,R=301]
+RewriteRule ^products/16581.html$ http://www.fs.com/products/37214.html?$1 [L,R=301]
+RewriteRule ^products/16587.html$ http://www.fs.com/products/20057.html?$1 [L,R=301]
+RewriteRule ^products/16588.html$ http://www.fs.com/products/20057.html?$1 [L,R=301]
+RewriteRule ^products/16594.html$ http://www.fs.com/products/29849.html?$1 [L,R=301]
+RewriteRule ^products/16595.html$ http://www.fs.com/products/37646.html?$1 [L,R=301]
+RewriteRule ^products/16597.html$ http://www.fs.com/products/37659.html?$1 [L,R=301]
+RewriteRule ^products/16624.html$ http://www.fs.com/products/37659.html?$1 [L,R=301]
+RewriteRule ^products/16641.html$ http://www.fs.com/products/37324.html?$1 [L,R=301]
+RewriteRule ^products/16646.html$ http://www.fs.com/products/29838.html?$1 [L,R=301]
+RewriteRule ^products/16742.html$ http://www.fs.com/products/20057.html?$1 [L,R=301]
+RewriteRule ^products/31639.html$ http://www.fs.com/products/11592.html?$1 [L,R=301]
+RewriteRule ^products/31658.html$ http://www.fs.com/products/11589.html?$1 [L,R=301]
+RewriteRule ^products/32658.html$ http://www.fs.com/products/29849.html?$1 [L,R=301]
+RewriteRule ^products/32695.html$ http://www.fs.com/products/20057.html?$1 [L,R=301]
+RewriteRule ^products/36259.html$ http://www.fs.com/products/24422.html?$1 [L,R=301]
+RewriteRule ^products/36263.html$ http://www.fs.com/products/34913.html?$1 [L,R=301]
+RewriteRule ^products/36880.html$ http://www.fs.com/products/17931.html?$1 [L,R=301]
+RewriteRule ^products/36881.html$ http://www.fs.com/products/17931.html?$1 [L,R=301]
+RewriteRule ^products/36882.html$ http://www.fs.com/products/17931.html?$1 [L,R=301]
+RewriteRule ^products/39393.html$ http://www.fs.com/products/20057.html?$1 [L,R=301]
+RewriteRule ^products/39583.html$ http://www.fs.com/products/29899.html?$1 [L,R=301]
+RewriteRule ^products/39628.html$ http://www.fs.com/products/20054.html?$1 [L,R=301]
+RewriteRule ^products/39629.html$ http://www.fs.com/products/20054.html?$1 [L,R=301]
+RewriteRule ^products/51682.html$ http://www.fs.com/products/39025.html?$1 [L,R=301]
+RewriteRule ^products/51683.html$ http://www.fs.com/products/39025.html?$1 [L,R=301]
+
+#2017-2-3 fallwind	301
+RewriteRule ^fiber-patching-solution.html$ http://www.fs.com/fiber-patching-solution-specials-5.html?$1 [L,R=301]
+RewriteRule ^copper-cable-assemblies.html$ http://www.fs.com/copper-cable-assemblies-specials-6.html?$1 [L,R=301]
+RewriteRule ^cable-management-solutions.html$ http://www.fs.com/cable-management-solutions-specials-7.html?$1 [L,R=301]
+RewriteRule ^bend-insensitive-fiber-cables.html$ http://www.fs.com/bend-insensitive-fiber-cables-specials-11.html?$1 [L,R=301]
+RewriteRule ^mpo-mtp-cables-solutions.html$ http://www.fs.com/mpo-mtp-cables-solutions-specials-9.html?$1 [L,R=301]
+RewriteRule ^light-armored-fiber-cable-solution.html$ http://www.fs.com/light-armored-fiber-cable-solution-specials-8.html?$1 [L,R=301]
+RewriteRule ^custom-lc-uniboot-hd-plus-fiber-cables.html$ http://www.fs.com/custom-lc-uniboot-hd-plus-fiber-cables-specials-10.html?$1 [L,R=301]
+RewriteRule ^bulk-fiber-cable-usa.html$ http://www.fs.com/bulk-fiber-cable-usa-specials-19.html?$1 [L,R=301]
+
+#2017-6-14 fallwind
+RewriteRule ^special/fiber-patching-solution.html$  index\.php?main_page=fiber_patching_solution [L]
+#RewriteRule ^special/fiber-patching-solution.html$ fiber-patching-solution-specials-5.html [L]
+
+
+
+RewriteRule ^important-guidelines-of-cisco-sfp-transceivers-aid-259.html$ http://www.fs.com/fs-com-sfp-optical-modules-solution-aid-589.html?$1 [L,R=301]
+
+#2016-09-26 bulk fiber cable
+RewriteRule ^c/(.*)(_|-)1145$ http://www.fs.com/c/bulk-fiber-cables-573 [L,R=301]
+RewriteRule ^c/(.*)(_|-)1249$ http://www.fs.com/c/indoor-cables-609 [L,R=301]
+RewriteRule ^c/(.*)(_|-)1250$ http://www.fs.com/c/indoor-cables-609 [L,R=301]
+RewriteRule ^c/(.*)(_|-)1251$ http://www.fs.com/c/indoor-cables-609 [L,R=301]
+RewriteRule ^c/(.*)(_|-)1277$ http://www.fs.com/c/armor-tight-buffered-breakout-1235 [L,R=301]
+RewriteRule ^c/(.*)(_|-)1313$ http://www.fs.com/c/fiber-patch-cables-261 [L,R=301]
+RewriteRule ^c/(.*)(_|-)2868$ http://www.fs.com/c/custom-mtp-mpo-cables-1125 [L,R=301]
+RewriteRule ^c/(.*)(_|-)3098$ http://www.fs.com/c/indoor-cables-609 [L,R=301]
+RewriteRule ^c/(.*)(_|-)3110$ http://www.fs.com/c/indoor-cables-609 [L,R=301]
+
+RewriteRule ^cable-management-solutions.html$ index\.php?main_page=cable_management_solutions [L]
+
+#2016-04-28
+RewriteRule ^c/(.*)-([0-9]+)/sort-order_(.*)/count-(.*)/settab_(.*)$   c/$1-$2?sort_order=$3&count=$4&settab=$5 [L,R=301]
+
+RewriteRule ^custom-fiber-cable-assemblies.html$ custom_fiber_cable_assemblies.html
+RewriteRule ^custom-fiber-optic-transceivers.html$ custom_fiber_optic_transceivers.html
+RewriteRule ^light-armored-fiber-cable-solution.html$ light_armored_fiber_cable_solution.html
+RewriteRule ^cwdm-dwdm-model-solution\.html$ index\.php?main_page=cwdm_dwdm_model_solution [L]
+RewriteRule ^copper-cable-assemblies\.html$ index\.php?main_page=copper_cable_assemblies [L]
+
+#2016-08-24 Deleted Categories
+RewriteRule ^c/cat3-network-cables-613$ http://www.fs.com/c/cat5e-cat6-cat7-904?$1 [L,R=301]
+RewriteRule ^c/110-patch-cables-621$ http://www.fs.com/c/cat5e-cat6-cat7-904?$1 [L,R=301]
+RewriteRule ^c/110-wire-connect-1064$ http://www.fs.com/c/cat5e-cat6-cat7-904?$1 [L,R=301]
+RewriteRule ^c/110-cross-connection-panels-1063$ http://www.fs.com/c/cat5e-cat6-cat7-904?$1 [L,R=301]
+RewriteRule ^c/fireworks-igniters-connectors-633$ http://www.fs.com/c/cat5e-cat6-cat7-904?$1 [L,R=301]
+RewriteRule ^c/telephone-keystone-jacks-plugs-1074$ http://www.fs.com/c/cat5e-cat6-cat7-904?$1 [L,R=301]
+RewriteRule ^c/modular-couplers-adapters-634$ http://www.fs.com/c/cat5e-cat6-cat7-904?$1 [L,R=301]
+
+#2016-08-18 Product-Documents-301
+RewriteRule ^dwdm-multiplexer-demultiplexer-sid-99.html$ http://www.fs.com/dwdm-mux-demux-sid-591.html?$1 [L,R=301]
+RewriteRule ^cwdm-multiplexer-demultiplexer-sid-116.html$ http://www.fs.com/cwdm-mux-demux-sid-143.html?$1 [L,R=301]
+RewriteRule ^dwdm-optical-add-drop-oadm-sid-100.html$ http://www.fs.com/dwdm-oadm-sid-141.html?$1 [L,R=301]
+RewriteRule ^cwdm-optical-add-drop-oadm-sid-96.html$ http://www.fs.com/cwdm-oadm-sid-140.html?$1 [L,R=301]
+RewriteRule ^fiberstore-fiber-adapter-panels-sid-252.html$ http://www.fs.com/c/fhd-adapter-panels-1068?$1 [L,R=301]
+RewriteRule ^50g-dwdm-multiplexer-demultiplexer-sid-220.html$ http://www.fs.com/dwdm-mux-demux-sid-591.html?$1 [L,R=301]
+RewriteRule ^200g-dwdm-multiplexer-demultiplexer-sid-221.html$ http://www.fs.com/dwdm-mux-demux-sid-591.html?$1 [L,R=301]
+RewriteRule ^cwdm-optical-add-drop-oadm-sid-222.html$ http://www.fs.com/cwdm-oadm-sid-140.html?$1 [L,R=301]
+RewriteRule ^transceptor-sfp-sid-224.html$ http://www.fs.com/sfp-gbic-transceivers-scid-283.html?$1 [L,R=301]
+RewriteRule ^cwdm-dwdm-sfp-sid-225.html$ http://www.fs.com/cwdm-sfp-transceivers-sid-142.html?$1 [L,R=301]
+RewriteRule ^wdm-bi-directional-sfp-sid-226.html$ http://www.fs.com/dwdm-sfp-transceivers-sid-579.html?$1 [L,R=301]
+RewriteRule ^copper-sfp-and-sgmii-sfp-sid-227.html$ http://www.fs.com/1000base-sfp-transceivers-sid-606.html?$1 [L,R=301]
+RewriteRule ^transceptor-gbic-sid-228.html$ http://www.fs.com/gbic-transceivers-sid-173.html?$1 [L,R=301]
+RewriteRule ^transceptor-de-10g-sfp--sid-229.html$ http://www.fs.com/10g-sfp-plus-transceivers-sid-151.html?$1 [L,R=301]
+RewriteRule ^transceptor-de-10g-xfp-sid-230.html$ http://www.fs.com/10g-xfp-transceivers-sid-152.html?$1 [L,R=301]
+RewriteRule ^transceptor-de-10g-x2-sid-231.html$ http://www.fs.com/10g-x2-transceivers-sid-158.html?$1 [L,R=301]
+RewriteRule ^transceptor-de-10g-xenpak-sid-232.html$ http://www.fs.com/10g-xenpak-transceivers-sid-171.html?$1 [L,R=301]
+RewriteRule ^cisco-sid-233.html$ http://www.fs.com/c/cisco-1000base-sfp-93?$1 [L,R=301]
+RewriteRule ^hp-sid-234.html$ http://www.fs.com/c/hp-1000base-sfp-94?$1 [L,R=301]
+RewriteRule ^juniper-sid-235.html$ http://www.fs.com/c/juniper-networks-1000base-sfp-95?$1 [L,R=301]
+RewriteRule ^dell-sid-236.html$ http://www.fs.com/c/dell-1000base-sfp-97?$1 [L,R=301]
+RewriteRule ^netgear-sid-237.html$ http://www.fs.com/c/netgear-1000base-sfp-98?$1 [L,R=301]
+RewriteRule ^extreme-networks-sid-238.html$ http://www.fs.com/c/extreme-networks-1000base-sfp-99?$1 [L,R=301]
+RewriteRule ^force10-sid-239.html$ http://www.fs.com/c/force10-networks-1000base-sfp-104?$1 [L,R=301]
+RewriteRule ^3com-sid-240.html$ http://www.fs.com/c/3com-1000base-sfp-652?$1 [L,R=301]
+RewriteRule ^alcatel-lucent-sid-241.html$ http://www.fs.com/c/alcatel-lucent-1000base-sfp-102?$1 [L,R=301]
+RewriteRule ^plc-splitter-for-pon-and-fttx-networks-sid-242.html$ http://www.fs.com/plc-splitters-scid-5.html?$1 [L,R=301]
+RewriteRule ^mpo-mtp-trunk-cables-sid-243.html$ http://www.fs.com/mpo-mtp-pre-terminated-cables-sid-109.html?$1 [L,R=301]
+RewriteRule ^mpo-mtp-harnesses-cables-sid-244.html$ http://www.fs.com/mpo-mtp-pre-terminated-cables-sid-109.html?$1 [L,R=301]
+RewriteRule ^10g-sfp-cables-sid-247.html$ http://www.fs.com/10g-sfp-plus-direct-attach-cable-assemblies-sid-186.html?$1 [L,R=301]
+RewriteRule ^10g-xfp-cables-sid-248.html$ http://www.fs.com/10g-sfp-plus-direct-attach-cable-assemblies-sid-186.html?$1 [L,R=301]
+RewriteRule ^40g-qsfp-cables-sid-249.html$ http://www.fs.com/40g-qsfp-direct-attach-cables-scid-173.html?$1 [L,R=301]
+RewriteRule ^cx4-sff-8470-cables-sid-251.html$ http://www.fs.com/10g-sfp-plus-direct-attach-cable-assemblies-sid-186.html?$1 [L,R=301]
+RewriteRule ^900um-tight-buffer-fibers-sid-253.html$ http://www.fs.com/900um-tight-buffer-fibers-sid-213.html?$1 [L,R=301]
+RewriteRule ^large-core-glass-fibers-sid-254.html$ http://www.fs.com/large-core-fiber-cables-sid-214.html?$1 [L,R=301]
+RewriteRule ^fiber-optic-patch-cables-sid-257.html$ http://www.fs.com/fiber-optic-patch-cables-sid-144.html?$1 [L,R=301]
+RewriteRule ^composite-video-over-fiber-sid-258.html$ http://www.fs.com/c/sdi-hdmi-vga-fiber-converter-1181?$1 [L,R=301]
+RewriteRule ^pdh-multipexers-sid-259.html$ http://www.fs.com/c/optical-multiplexers-1048?$1 [L,R=301]
+RewriteRule ^avaya-sid-261.html$ http://www.fs.com/c/avaya-10g-sfp-plus-2675?$1 [L,R=301]
+RewriteRule ^brocade-sid-262.html$ http://www.fs.com/c/brocade-10g-sfp-plus-71?$1 [L,R=301]
+RewriteRule ^d-link-sid-263.html$ http://www.fs.com/c/d-link-10g-sfp-plus-1154?$1 [L,R=301]
+RewriteRule ^foundry-sid-265.html$ http://www.fs.com/c/foundry-networks-1000base-sfp-670?$1 [L,R=301]
+RewriteRule ^h3c-sid-266.html$ http://www.fs.com/c/h3c-10g-sfp-plus-75?$1 [L,R=301]
+RewriteRule ^intel-sid-267.html$ http://www.fs.com/c/intel-10g-sfp-plus-1345?$1 [L,R=301]
+RewriteRule ^marconi-sid-269.html$ http://www.fs.com/sfp-gbic-transceivers-scid-283.html?$1 [L,R=301]
+RewriteRule ^mcafee-sid-270.html$ http://www.fs.com/c/mcafee-1000base-sfp-674?$1 [L,R=301]
+RewriteRule ^nortel-sid-271.html$ http://www.fs.com/sfp-gbic-transceivers-scid-283.html?$1 [L,R=301]
+RewriteRule ^q-logic-sid-272.html$ http://www.fs.com/c/qlogic-1000base-sfp-683?$1 [L,R=301]
+RewriteRule ^transition-networks-sid-273.html$ http://www.fs.com/c/transition-networks-1000base-sfp-751?$1 [L,R=301]
+RewriteRule ^redback-sid-274.html$ http://www.fs.com/c/redback-networks-1000base-sfp-684?$1 [L,R=301]
+RewriteRule ^gytc8a-fiber-cable-sid-296.html$ http://www.fs.com/figure-8-aerial-cables-sid-153.html?$1 [L,R=301]
+RewriteRule ^gyxtc8s-fiber-cable-sid-297.html$ http://www.fs.com/figure-8-aerial-cables-sid-153.html?$1 [L,R=301]
+RewriteRule ^gyxtc8y-fiber-cable-sid-298.html$ http://www.fs.com/figure-8-aerial-cables-sid-153.html?$1 [L,R=301]
+#RewriteRule ^cwdm-dwdm-transmission-solution.html$ http://www.fs.com/fmu-cwdm-dwdm-mux-demux-solution.html?$1 [L,R=301]
+
+#2017.2.4 fallwind
+#RewriteRule ^fmu-cwdm-dwdm-mux-demux-solution.html$ http://www.fs.com/fmu-cwdm-dwdm-mux-demux-solution-specials-12.html?$1 [L,R=301]
+
+#2016-11-30
+RewriteRule ^reversible-polarity-lc-uniboot-patch-cable.html$ http://www.fs.com/custom-lc-uniboot-hd-plus-fiber-cables.html?$1 [L,R=301]
+
+
+#2017-2-3
+RewriteRule ^fs-com-usa-inventory-list-scid-339.html$ http://www.fs.com/support/stock-list/seattle-stock-list-1?$1 [L,R=301]
+
+
+RewriteRule ^fiber/lc-lc-15$ http://www.fs.com/fiber-lc-lc-15?$1 [L,R=301]
+RewriteRule ^fiber/sc-sc-5$ http://www.fs.com/fiber-sc-sc-5?$1 [L,R=301]
+RewriteRule ^fiber/lc-sc-1$ http://www.fs.com/fiber-lc-sc-1?$1 [L,R=301]
+RewriteRule ^fiber/mtp-mtp-9$ http://www.fs.com/fiber-mtp-mtp-9?$1 [L,R=301]
+RewriteRule ^fiber/mtp-lc-10$ http://www.fs.com/fiber-mtp-lc-10?$1 [L,R=301]
+RewriteRule ^fiber/st-st-11$ http://www.fs.com/fiber-st-st-11?$1 [L,R=301]
+RewriteRule ^fiber/lc-st-2$ http://www.fs.com/fiber-lc-st-2?$1 [L,R=301]
+RewriteRule ^fiber/sc-st-6$ http://www.fs.com/fiber-sc-st-6?$1 [L,R=301]
+RewriteRule ^fiber/fc-fc-12$ http://www.fs.com/fiber-fc-fc-12?$1 [L,R=301]
+RewriteRule ^fiber/lc-fc-3$ http://www.fs.com/fiber-lc-fc-3?$1 [L,R=301]
+RewriteRule ^fiber/sc-fc-7$ http://www.fs.com/fiber-sc-fc-7?$1 [L,R=301]
+RewriteRule ^fiber/e2000-e2000-14$ http://www.fs.com/fiber-e2000-e2000-14?$1 [L,R=301]
+RewriteRule ^fiber/fc-e2000-13$ http://www.fs.com/fiber-fc-e2000-13?$1 [L,R=301]
+
+
+
+
+#2015-11-10
+RewriteRule ^mpo-mtp-cables-solutions.html$ mpo_mtp_cables_solutions.html
+RewriteRule ^fiber-patching-solution.html$ fiber_patching_solution.html
+RewriteRule ^day-return-policy.html$ day_return_policy.html
+RewriteRule ^about-us.html$ about_us.html
+RewriteRule ^why-us.html$ why_us.html
+RewriteRule ^site-map.html$ site_map.html
+RewriteRule ^rma-solution.html$ rma_solution.html
+RewriteRule ^iso-standard.html$ iso_standard.html
+RewriteRule ^payment-methods.html$ payment_methods.html
+RewriteRule ^net-30.html$ net_30.html
+RewriteRule ^global-shipping.html$ global_shipping.html
+RewriteRule ^estimated-lead-time.html$ estimated_lead_time.html
+RewriteRule ^contact-us.html$ contact_us.html
+RewriteRule ^how-to-buy.html$ how_to_buy.html
+
+#2015-11-25
+RewriteRule ^custom-lc-uniboot-hd-plus-fiber-cables.html$ custom_lc_uniboot_hd_plus_fiber_cables.html
+
+RewriteRule ^c/fiber-optic-patch-cables_209$  http://www.fs.com/c/fiber-optic-patch-cables-209?$1 [L,R=301]
+RewriteRule ^c/fiber-splice-protection-sleeves-1102$  http://www.fs.com/c/fiber-splice-tray-protection-sleeves-2906?$1 [L,R=301]
+
+#2016-03-07
+RewriteRule ^narrow/(.*)/fiber-optic-patch-cables_209$ http://www.fs.com/c/fiber-optic-patch-cables-209?$1 [L,R=301]
+RewriteRule ^c/10g-om4-fiber-cables_763$ http://www.fs.com/c/om4-40-100gb-50-125-multimode-2867?$1 [L,R=301]
+RewriteRule ^c/om2-multimode-fiber-cables_306$ http://www.fs.com/c/om2-50-125-multimode-1194?$1 [L,R=301]
+RewriteRule ^c/om1-multimode-fiber-cables_278$ http://www.fs.com/c/om1-62-5-125-multimode-901?$1 [L,R=301]
+RewriteRule ^c/10g-om4-plenum-cables_1322$ http://www.fs.com/c/om4-40-100gb-50-125-multimode-2867?$1 [L,R=301]
+RewriteRule ^c/10g-om3-plenum-cables_1323$ http://www.fs.com/c/om3-10gb-50-125-multimode-1324?$1 [L,R=301]
+RewriteRule ^c/om2-multimode-plenum-cables_1326$ http://www.fs.com/c/om2-50-125-multimode-1194?$1 [L,R=301]
+RewriteRule ^c/om1-multimode-plenum-cables_1325$ http://www.fs.com/c/om1-62-5-125-multimode-901?$1 [L,R=301]
+RewriteRule ^c/singlemode-armored-cables_956$ http://www.fs.com/c/armored-os2-9-125-singlemode-3mm-898?$1 [L,R=301]
+RewriteRule ^c/multi-core-armored-cables_997$ http://www.fs.com/c/pre-terminated-fiber-cables-1120?$1 [L,R=301]
+
+#2015-12-31
+RewriteRule ^test-assured-program.html$  test_assured_program.html
+#RewriteRule ^support.html$  solutions_bak_bak_bak.html
+RewriteRule ^support/a/82/fs-com(.+)-quality-assurance-program-for-plc-splitter$  http://www.fs.com/support/polarity-b-mtp-mpo-guidelines-for-10g-ethernet-and-fibre-channel-networks-80
+RewriteRule ^support/a/52/wdm-network-solutions$  http://www.fs.com/support/wdm-network-solutions-52?$1 [L,R=301]
+
+#2015-11-19
+RewriteRule ^mtp.html$  http://www.fs.com/mpo-mtp-cables-solutions.html?$1 [L,R=301]
+
+#2015-10-24
+RewriteRule ^new-brocade-xbr-000148-compatible-8gbase-sr-sfp-850nm-500m-transceiver-module-p-15466.html$ http://www.fs.com/products/31577.html?$1 [L,R=301]
+RewriteRule ^new-brocade-xbr-000159-compatible-8gbase-sr-sfp-850nm-500m-compatible-transceiver-module-p-15477.html$ http://www.fs.com/products/31577.html?$1 [L,R=301]
+RewriteRule ^new-brocade-xbr-000172-compatible-8gbase-lr-sfp-1310nm-10km-compatible-transceiver-module-p-15474.html$ http://www.fs.com/products/31577.html?$1 [L,R=301]
+RewriteRule ^new-brocade-10g-sfpp-lr-8-compatible-10gbase-lr-sfp-1310nm-10km-transceiver-module-p-31405.html$ http://www.fs.com/products/31584.html?$1 [L,R=301]
+RewriteRule ^new-ibm-45w2414-8-pack-compatible-10gbase-sr-sfp-transceiver-module-p-15149.html$ http://www.fs.com/products/15134.html?$1 [L,R=301]
+RewriteRule ^new-ibm-45w0501-8-pack-compatible-8gbase-sr-sfp-transceiver-module-p-15144.html$ http://www.fs.com/products/15132.html?$1 [L,R=301]
+
+RewriteRule ^c/epon-onu_749$ http://www.fs.com/c/olt-ont-units-1335?$1 [L,R=301]
+RewriteRule ^c/epon-olt_748$ http://www.fs.com/c/olt-ont-units-1335?$1 [L,R=301]
+RewriteRule ^c/olt_1334$ http://www.fs.com/c/olt-ont-units-1335?$1 [L,R=301]
+RewriteRule ^c/(.*)(_|-)1157$ http://www.fs.com/c/generic-40g-qsfp-891 [L,R=301]
+RewriteRule ^c/(.*)(_|-)920$ http://www.fs.com/c/cwdm-dwdm-transceivers-918 [L,R=301]
+RewriteRule ^c/(.*)(_|-)990$ http://www.fs.com/c/cwdm-dwdm-transceivers-918 [L,R=301]
+#set Etag
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault A600
+ExpiresByType image/x-icon A2592000
+ExpiresByType application/x-javascript A2592000
+ExpiresByType text/css A604800
+ExpiresByType image/gif A2592000
+ExpiresByType image/png A2592000
+ExpiresByType image/jpeg A2592000
+ExpiresByType text/plain A86400
+ExpiresByType application/x-shockwave-flash A2592000
+ExpiresByType video/x-flv A2592000
+ExpiresByType application/pdf A2592000
+ExpiresByType text/html A600
+</IfModule>
+
+<Ifmodule mod_headers.c>
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf|woff)$">
+Header set Cache-Control "max-age=604800, public"
+</FilesMatch>
+</IfModule>
+
+<IfModule mod_security.c>
+    SecFilterEngine Off
+ SecFilterScanPOST Off
+</IfModule>
+
+RewriteRule ^cwdm-dwdm-transmission-solution\.html$ index\.php?main_page=cwdm_dwdm_transmission_solution [L]
+#2016.12.30  fallwind
+RewriteRule ^bulk-fiber-cable-usa.html$	index\.php?main_page=bulk_fiber_cable_usa [L]
+
+###########new arrivals###########################
+RewriteRule ^new-products/(.*)/ index\.php?main_page=new_products&datetime=$1
+
+#match search
+RewriteRule ^search/(.*)$  index\.php?main_page=advanced_search_result&keyword=$1&custom=1&%{QUERY_STRING} [L]
+
+#advanced_search_result
+RewriteRule ^(.*)_c([0-9]+)/([0-9]+)\.html  index\.php?main_page=advanced_search_result&keyword=$2&%{QUERY_STRING} [L]
+RewriteRule ^(.*)_c([0-9]+)/([0-9]+)\.html  index\.php?main_page=advanced_search_result&keyword=$2&page=$3&%{QUERY_STRING} [L]
+RewriteRule ^(.*)_c([0-9]+)/([0-9]+)/type_(l|g)/([0-9])+\.html  index\.php?main_page=advanced_search_result&keyword=$2&style=$3&page=$4 [QSA,L,NC]
+
+#popular
+RewriteRule ^(.*)-po-([0-9]+)\.html$ index\.php?main_page=Popular_detail&Popular_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^(.*)-po-([0-9]+)/([0-9]+)\.html$ index\.php?main_page=Popular_detail&Popular_id=$2&page=$3&%{QUERY_STRING} [L]
+RewriteRule ^screen/([0-9\-]+)/(.*)-po-([0-9]+)/c-([0-9]+)\.html$ index\.php?main_page=Popular_detail&screen=$1&Popular_id=$3&count=$4&searchSubmit=Search&%{QUERY_STRING} [L]
+RewriteRule ^screen/([0-9\-]+)/(.*)-po-([0-9]+)/c-([0-9]+)/([0-9]+)\.html$ index\.php?main_page=Popular_detail&screen=$1&Popular_id=$3&count=$4&page=$5&searchSubmit=Search&%{QUERY_STRING} [L]
+RewriteRule ^(.*)-po-([0-9]+)/c-([0-9]+)\.html$ index\.php?main_page=Popular_detail&Popular_id=$2&count=$3&%{QUERY_STRING} [L]
+RewriteRule ^(.*)-po-([0-9]+)/c-([0-9]+)/([0-9]+)\.html$ index\.php?main_page=Popular_detail&Popular_id=$2&count=$3&page=$4&%{QUERY_STRING} [L]
+RewriteRule ^(.*)-tag-([0-9]+).html$ index\.php?main_page=Product_List&tag_type=$2&%{QUERY_STRING} [L]
+RewriteRule ^(.*)-tag-([0-9]+)/([0-9]+)\.html  index\.php?main_page=Product_List&tag_type=$2&page=$3&%{QUERY_STRING} [L]
+
+
+#tutorial
+RewriteRule ^tutorial/([0-9]+).html$ index\.php?main_page=tutorial&page=$1&%{QUERY_STRING} [L]
+RewriteRule ^(.*)-cid-([0-9]+).html$ index\.php?main_page=tutorial_list&c=$2&%{QUERY_STRING} [L]
+#RewriteRule ^(.*)tutorial/([0-9]+)\.html$ index\.php?main_page=tutorial_detail&a_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^(.*)-aid-([0-9]+).html$ index\.php?main_page=tutorial_detail&a_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^tutorial/(.*)_cid([0-9]+)/([0-9]+)\.html  index\.php?main_page=tutorial_list&c=$2&page=$3&%{QUERY_STRING} [L]
+RewriteRule ^tag/([0-9]+)\.html  index\.php?main_page=tutorial_tag_search&tag_id=$1&%{QUERY_STRING} [L]
+RewriteRule ^tag/([0-9]+)/([0-9]+)\.html  index\.php?main_page=tutorial_tag_search&tag_id=$1&page=$2&%{QUERY_STRING} [L]
+
+#fallwind 2017.1.11
+RewriteRule ^support/stock-list/(.*)-([0-9]+)$ index\.php?main_page=support_stock_list&a_id=$2&%{QUERY_STRING} [L]
+
+#fallwind 2017.1.19
+RewriteRule ^(.*)-specials-([0-9]+)\.html$ index\.php?main_page=fs_special_page&id=$2&%{QUERY_STRING} [L]
+
+# support--- support_categories_name-------- support_article_name
+RewriteRule ^support/?$ index\.php?main_page=support&%{QUERY_STRING} [L]
+RewriteRule ^support/(.*)-([0-9]+)$ index\.php?main_page=support_detail&supportid=$2&%{QUERY_STRING} [L]
+#fallwind  2016.10.12
+RewriteRule ^support/(.*)-([0-9]+)/([0-9]+)$ index\.php?main_page=support_detail&supportid=$2&id=$3&%{QUERY_STRING} [L]
+
+#feedback
+#RewriteRule ^(.*)/p/([0-9]+).html$ index\.php?main_page=feedback&feedback_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^feedback/p/([0-9]+)/(.*)$ index\.php?main_page=feedback&feedback_id=$2&%{QUERY_STRING} [L]
+
+RewriteRule ^feedback/?$ index\.php?main_page=fs_feedback&%{QUERY_STRING} [L]
+
+#news_and_events
+RewriteRule ^news_and_events/([0-9]+).html$ index\.php?main_page=news_and_events&page=$1&%{QUERY_STRING} [L]
+RewriteRule ^news-and-events/(.*)/news-([0-9]+)/([0-9]+).html$ index\.php?main_page=news_and_events&news=$2&page=$3&%{QUERY_STRING} [L]
+RewriteRule ^news-and-events/(.*)/event-([0-9]+)/([0-9]+).html$ index\.php?main_page=news_and_events&event=$2&page=$3&%{QUERY_STRING} [L]
+RewriteRule ^news-and-events/(.*)/keywords-(.*)/(.*).html$ index\.php?main_page=news_and_events&keywords=$2&page=$3&%{QUERY_STRING} [L]
+
+
+#in_the_news
+RewriteRule ^news_and_events/?$ index\.php?main_page=news_and_events&%{QUERY_STRING} [L]
+RewriteRule ^news-and-events/(.*)/news-([0-9]+)$ index\.php?main_page=news_and_events&news=$2&%{QUERY_STRING} [L]
+RewriteRule ^news-and-events/(.*)/event-([0-9]+)$ index\.php?main_page=news_and_events&event=$2&%{QUERY_STRING} [L]
+
+#in_the_news
+RewriteRule ^news_and_events/?$ index\.php?main_page=news_and_events&%{QUERY_STRING} [L]
+RewriteRule ^news-and-events/(.*)/news-([0-9]+)/?$ index\.php?main_page=news_and_events&news=$2&%{QUERY_STRING} [L]
+RewriteRule ^news-and-events/(.*)/event-([0-9]+)/?$ index\.php?main_page=news_and_events&event=$2&%{QUERY_STRING} [L]
+RewriteRule ^news-and-events/(.*)/keywords-(.*)/?$ index\.php?main_page=news_and_events&keywords=$2&%{QUERY_STRING} [L]
+
+
+#questions
+RewriteRule ^questions/p/([0-9]+)/(.*)/([0-9]+)\.html$ index\.php?main_page=qa&products_id=$1&page=$3&%{QUERY_STRING} [L]
+RewriteRule ^questions/p/([0-9]+)/(.*)$ index\.php?main_page=qa&products_id=$1&%{QUERY_STRING} [L]
+RewriteRule ^question/p/([0-9]+)/qid/([0-9]+)/(.*)/(.*)$ index\.php?main_page=qa_detail&products_id=$1&qid=$2&%{QUERY_STRING} [L]
+
+
+
+#all review
+RewriteRule ^review/(.*)-r-([0-9]+).html$  404.html [L]
+#RewriteRule ^(.*)-r-([0-9]+).html$ index\.php?main_page=all_review&pr_id=$2&%{QUERY_STRING} [L]
+
+#products
+RewriteRule ^(.*)-sid-([0-9]+).html#(.*)$ index\.php?main_page=products_detail&s_id=$2#$3&%{QUERY_STRING} [L]
+
+RewriteRule ^(.*)-sid-([0-9]+).html$ index\.php?main_page=products_detail&s_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^(.*)-scid-([0-9]+).html$ index\.php?main_page=products_list&s_cid=$2&%{QUERY_STRING} [L]
+
+#Solution
+#RewriteRule ^(.*)-cid-([0-9]+).html$ index\.php?main_page=solution_list&c=$2&%{QUERY_STRING} [L]
+
+RewriteRule ^(.*)-sid-([0-9]+).html#(.*)$ index\.php?main_page=solution_detail&s_id=$2#$3&%{QUERY_STRING} [L]
+
+RewriteRule ^(.*)-sid-([0-9]+).html$ index\.php?main_page=solution_detail&s_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^(.*)-s-([0-9]+).html$ index\.php?main_page=solution_list&s=$2&%{QUERY_STRING} [L]
+
+
+# For dreamscape's News & Articles Manager
+RewriteRule ^news/([0-9]+).html$ index\.php?main_page=news&page=$1&%{QUERY_STRING} [L]
+RewriteRule ^news/?$ index\.php?main_page=news&%{QUERY_STRING} [L]
+RewriteRule ^news/rss.xml$ index\.php?main_page=news_rss&%{QUERY_STRING} [L]
+RewriteRule ^news/archive/?$ index\.php?main_page=news_archive&%{QUERY_STRING} [L]
+RewriteRule ^news/([0-9]{4})-([0-9]{2})-([0-9]{2}).html$ index\.php?main_page=news&date=$1-$2-$3&%{QUERY_STRING} [L]
+RewriteRule ^news/archive/([0-9]{4})-([0-9]{2}).html$ index\.php?main_page=news_archive&date=$1-$2&%{QUERY_STRING} [L]
+RewriteRule ^news/(.*)-a-([0-9]+)-comments.html$ index\.php?main_page=news_comments&article_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^news/(.*)-a-([0-9]+).html$ index\.php?main_page=news_article&article_id=$2&%{QUERY_STRING} [L]
+
+# support--- support_categories_name-------- support_article_name
+RewriteRule ^support/?$ index\.php?main_page=support&%{QUERY_STRING} [L]
+RewriteRule ^support/c/([0-9]+)/(.*)$ index\.php?main_page=support_list&c_id=$1&%{QUERY_STRING} [L]
+RewriteRule ^support/a/([0-9]+)/(.*)$ index\.php?main_page=support_detail&a_id=$1&%{QUERY_STRING} [L]
+#RewriteRule ^support/c/([0-9]+)/(.*)$ index\.php?main_page=support_categories&c_id=$1&%{QUERY_STRING} [L]
+
+
+# From Ultimate SEO URLs
+RewriteRule ^(?!blog)(.*)-pi-([0-9]+).html$ index\.php?main_page=popup_image&pID=$2&%{QUERY_STRING} [L]
+RewriteRule ^(?!blog)(.*)-pr-([0-9]+).html$ index\.php?main_page=product_reviews&products_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^(?!blog)(.*)-pri-([0-9]+).html$ index\.php?main_page=product_reviews_info&products_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^(?!blog)(.*)-ezp-([0-9]+).html$ index\.php?main_page=page&id=$2&%{QUERY_STRING} [L]
+RewriteRule ^(?!blog)(.*)-m-([0-9]+).html$ index\.php?main_page=index&manufacturers_id=$2&%{QUERY_STRING} [L]
+# For Open Operations Info Manager
+RewriteRule ^(?!blog)(.*)-i-([0-9]+).html$ index\.php?main_page=info_manager&pages_id=$2&%{QUERY_STRING} [L]
+
+#products
+#RewriteRule ^(.*)-p-([0-9]+)\.html$ index\.php?main_page=product_info&products_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^(.*)products/([0-9]+)\.html$ index\.php?main_page=product_info&products_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^(.*)-p([0-9]+)\.html$ index\.php?main_page=product_info&products_id=$2&%{QUERY_STRING} [L]
+RewriteRule ^(.*)-p-([0-9]+)\.html$   products/$2\.html [L,R=301]
+
+#rewrite plus
+RewriteRule ^finder/(.*)-([0-9]+)?f=(.*)=([0-9]+) - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+
+RewriteRule ^finder/(.*)-([0-9]+)?f=(.*)=([0-9]+)$ - [NC,E=tag=$2&tQuery:%{ENV:tQuery}]
+RewriteRule ^finder/(.*)-([0-9]+)$ index\.php?main_page=tag_categories&tag=$2&%{QUERY_STRING} [L]
+
+RewriteRule ^finder/(.*)-([0-9]+)?f=(.*)=([0-9]+)&_requestConfirmationToken=(.*)$ index\.php?main_page=tag_categories&tag=$2&f=$3&_requestConfirmationToken=$4&%{QUERY_STRING} [L]
+
+#for new rules
+
+#fiber_transceivers
+RewriteRule ^finder/all-(.*)-transceivers$ index\.php?main_page=fiber_transceivers&brand=$1&%{QUERY_STRING} [L]
+
+
+#############----bof narrows -------------------
+#2016-5-10-09
+RewriteRule ^narrow/(.*)_v([0-9]+)t([0-9+])(.*)_([0-9]+)$ narrow/$1_v$2t$3$4-$5 [L,R=301]
+
+RewriteRule ^narrow/(.*)_v([0-9]+)t0 - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+RewriteRule ^narrow/(.*)_v([0-9]+)t1 - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+RewriteRule ^narrow/(.*)_v([0-9]+)t2 - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+RewriteRule ^narrow/(.*)_v([0-9]+)t3 - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+RewriteRule ^narrow/(.*)_v([0-9]+)t4 - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+RewriteRule ^narrow/(.*)_v([0-9]+)t5 - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+RewriteRule ^narrow/(.*)_v([0-9]+)t6 - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+RewriteRule ^narrow/(.*)_v([0-9]+)t7 - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+RewriteRule ^narrow/(.*)_v([0-9]+)t8 - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+RewriteRule ^narrow/(.*)_v([0-9]+)t9 - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+
+RewriteRule ^narrow/(.*)/(.*)_search - [NC,E=tQuery:%{ENV:tQuery}&keyword=$2]
+
+#cpath param
+RewriteRule ^narrow/(.*)-([0-9]+) - [NC,E=tQuery:%{ENV:tQuery}&cPath=$2]
+
+#sort_order param
+RewriteRule ^narrow/(.*)/sort-order_(priced|price|sellers|rate|new) - [NC,E=tQuery:%{ENV:tQuery}&sort_order=$2]
+
+
+#count_   settab   param
+RewriteRule ^narrow/(.*)/count-(12|24|36|48) - [NC,E=tQuery:%{ENV:tQuery}&count=$2]
+RewriteRule ^narrow/(.*)/settab_(one|two|three) - [NC,E=tQuery:%{ENV:tQuery}&settab=$2]
+
+
+#type param
+RewriteRule ^narrow/(.*)/type_(g|l) - [NC,E=tQuery:%{ENV:tQuery}&type=$2]
+
+#currency param
+RewriteRule ^narrow/(.*)/currency_(.*) - [NC,E=tQuery:%{ENV:tQuery}&currency=$2]
+
+#page param
+RewriteRule ^narrow/(.*)/([0-9]+)\.html - [NC,E=tQuery:%{ENV:tQuery}&page=$2]
+RewriteRule ^narrow(_[^/]+)?(/)? /index.php?main_page=narrow&%{ENV:tQuery} [NC,L]
+
+#update 11.16 au:peter
+#RewriteRule ^reviews/(.*)-([0-9]+).html$ index\.php?main_page=comments_review&rid=$2&%{QUERY_STRING} [L]
+
+#update 2017.3.31 au:ery
+#all_reviews
+RewriteRule ^reviews/([0-9]+).html$ index\.php?main_page=all_review&products_id=$1&%{QUERY_STRING} [L]
+#comments_review
+RewriteRule ^comments/([0-9]+).html$ index\.php?main_page=comments_review&rid=$1&%{QUERY_STRING} [L]
+
+
+#############----eof narrows -------------------
+
+#categories
+RewriteRule ^c/(.*)-([0-9]+)?f=(.*)=([0-9]+) - [NC,E=tQuery:%{ENV:tQuery}&narrow[]=$2]
+
+RewriteRule ^c/(.*)-([0-9]+)?f=(.*)=([0-9]+)$ - [NC,E=cPath=$2&tQuery:%{ENV:tQuery}]
+
+RewriteRule ^c/(.*)-([0-9]+)/narrow(_[^/]+)?(/)? /index.php?main_page=index&%{ENV:tQuery} [NC,L]
+
+RewriteRule ^c/(.*)[-_]([0-9]+)$ index\.php?main_page=index&cPath=$2&%{QUERY_STRING} [L]
+
+RewriteRule ^c/(.*)-([0-9]+)?page=([0-9]+)$ index\.php?main_page=index&cPath=$2&page=$3&%{QUERY_STRING} [L]
+#RewriteRule ^c/(.*)-([0-9]+)?f=(.*)=([0-9]+)$ index\.php?main_page=index&cPath=$2&f=$3&%{QUERY_STRING} [L]
+RewriteRule ^c/(.*)-([0-9]+)?f=(.*)=([0-9]+)&_requestConfirmationToken=(.*)$ index\.php?main_page=index&cPath=$2&f=$3&_requestConfirmationToken=$4&%{QUERY_STRING} [L]
+
+RewriteRule ^c/(.*)-([0-9]+)?sort_order=(priced|price|sellers|rate|new)&_requestConfirmationToken=(.*)$ index\.php?main_page=index&cPath=$2&sort_order=$3&_requestConfirmationToken=$4&%{QUERY_STRING} [L]
+RewriteRule ^c/(.*)-([0-9]+)?sort_order=(priced|price|sellers|rate|new|productname|productnamed|popularity)&count=(12|24|36|48)&settab=(one|two|three)&_requestConfirmationToken=(.*)$ index\.php?main_page=index&cPath=$2&sort_order=$3&count=$4&settab=$5&_requestConfirmationToken=$6&%{QUERY_STRING} [L]
+
+RewriteRule ^c/(.*)-([0-9]+)?sort_order=(priced|price|sellers|rate|new|productname|productnamed|popularity)&f=(.*)_([0-9]+)$ index\.php?main_page=index&cPath=$2&sort_order=$3&f=$4&%{QUERY_STRING} [L]
+RewriteRule ^c/(.*)-([0-9]+)?sort_order=(priced|price|sellers|rate|new|productname|productnamed|popularity)&f=(.*)_([0-9]+)&page=([0-9]+)\.html$ index\.php?main_page=index&cPath=$2&sort_order=$3&f=$4&page=$5&%{QUERY_STRING} [L]
+RewriteRule ^c/(.*)-([0-9]+)?sort_order=(priced|price|sellers|rate|new|productname|productnamed|popularity)&type=(g|l)&f=(.*)_([0-9]+)$ index\.php?main_page=index&cPath=$2&sort_order=$3&type=$4&f=$5&%{QUERY_STRING} [L]
+RewriteRule ^c/(.*)-([0-9]+)?sort_order=(priced|price|sellers|rate|new|productname|productnamed|popularity)&type=(g|l)&f=(.*)_([0-9]+)&page=([0-9]+)$ index\.php?main_page=index&cPath=$2&sort_order=$3&type=$4&f=$5&page=$6&%{QUERY_STRING} [L]
+
+RewriteRule ^c/(.*)-([0-9]+)?sort_order=(priced|price|sellers|rate|new|productname|productnamed|popularity)&count=(12|24|36|48)&settab=(one|two|three)&f=(.*)_([0-9]+)$ index\.php?main_page=index&cPath=$2&sort_order=$3&count=$4&settab=$5&f=$6&%{QUERY_STRING} [L]
+RewriteRule ^c/(.*)-([0-9]+)?sort_order=(priced|price|sellers|rate|new|productname|productnamed|popularity)&count=(12|24|36|48)&settab=(one|two|three)&f=(.*)_([0-9]+)&page=([0-9]+)$ index\.php?main_page=index&cPath=$2&sort_order=$3&count=$4&settab=$5&f=$6&page=$7&%{QUERY_STRING} [L]
+
+RewriteRule ^c/(.*)-([0-9]+)?type=(g|l)&f=(.*)_([0-9]+)&page=([0-9]+)$ index\.php?main_page=index&cPath=$2&type=$3&f=$4&page=$5&%{QUERY_STRING} [L]
+RewriteRule ^c/(.*)-([0-9]+)?type=(g|l)&f=(.*)_([0-9]+)$ index\.php?main_page=index&cPath=$2&type=$3&f=$4&%{QUERY_STRING} [L]
+
+#search result
+
+RewriteRule ^keyword/(.*)$ index\.php?main_page=advanced_search_result&keyword=$1&%{QUERY_STRING} [L]
+RewriteRule ^keyword/(.*)&page=([0-9]+)$  index\.php?main_page=advanced_search_result&keyword=$1&page=$2&%{QUERY_STRING} [L]
+RewriteRule ^keyword/(.*)&f=(.*)=([0-9]+)&searchSubmit=(.*)$ index\.php?main_page=advanced_search_result&keyword=$1&f=$2&searchSubmit=$3&%{QUERY_STRING} [L]
+
+
+#tag categories
+RewriteRule ^finder/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)$ index\.php?main_page=tag_categories&tag=$2&sort_order=$3&%{QUERY_STRING} [L]
+RewriteRule ^finder/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)/([0-9]+)\.html$ index\.php?main_page=tag_categories&tag=$2&sort_order=$3&page=$4&%{QUERY_STRING} [L]
+RewriteRule ^finder/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)/type_(g|l)$ index\.php?main_page=tag_categories&tag=$2&sort_order=$3&type=$4&%{QUERY_STRING} [L]
+RewriteRule ^finder/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)/type_(g|l)/([0-9]+)\.html$ index\.php?main_page=tag_categories&tag=$2&sort_order=$3&type=$4&page=$5&%{QUERY_STRING} [L]
+RewriteRule ^finder/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)/count-(12|24|36|48)/settab_(one|two|three)$ index\.php?main_page=tag_categories&tag=$2&sort_order=$3&count=$4&settab=$5&%{QUERY_STRING} [L]
+RewriteRule ^finder/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)/count-(12|24|36|48)/settab_(one|two|three)/([0-9]+)\.html$ index\.php?main_page=tag_categories&tag=$2&sort_order=$3&count=$4&settab=$5&page=$6&%{QUERY_STRING} [L]
+RewriteRule ^finder/(.*)-([0-9]+)/type_(g|l)/([0-9]+)\.html$ index\.php?main_page=tag_categories&tag=$2&type=$3&page=$4&%{QUERY_STRING} [L]
+RewriteRule ^finder/(.*)-([0-9]+)/type_(g|l)$ index\.php?main_page=tag_categories&tag=$2&type=$3&%{QUERY_STRING} [L]
+RewriteRule ^finder/(.*)-([0-9]+)/([0-9]+)\.html$ index\.php?main_page=tag_categories&tag=$2&page=$3&%{QUERY_STRING} [L]
+
+
+RewriteRule ^fiber/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)$ index\.php?main_page=fiber_categories&con=$2&sort_order=$3&%{QUERY_STRING} [L]
+RewriteRule ^fiber/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)/([0-9]+)\.html$ index\.php?main_page=fiber_categories&con=$2&sort_order=$3&page=$4&%{QUERY_STRING} [L]
+RewriteRule ^fiber/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)/type_(g|l)$ index\.php?main_page=fiber_categories&con=$2&sort_order=$3&type=$4&%{QUERY_STRING} [L]
+RewriteRule ^fiber/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)/type_(g|l)/([0-9]+)\.html$ index\.php?main_page=fiber_categories&con=$2&sort_order=$3&type=$4&page=$5&%{QUERY_STRING} [L]
+RewriteRule ^fiber/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)/count-(12|24|36|48)/settab_(one|two|three)$ index\.php?main_page=fiber_categories&con=$2&sort_order=$3&count=$4&settab=$5&%{QUERY_STRING} [L]
+RewriteRule ^fiber/(.*)-([0-9]+)/sort-order_(priced|price|sellers|rate|new|productname|productnamed|popularity)/count-(12|24|36|48)/settab_(one|two|three)/([0-9]+)\.html$ index\.php?main_page=fiber_categories&con=$2&sort_order=$3&count=$4&settab=$5&page=$6&%{QUERY_STRING} [L]
+RewriteRule ^fiber/(.*)-([0-9]+)/type_(g|l)/([0-9]+)\.html$ index\.php?main_page=fiber_categories&con=$2&type=$3&page=$4&%{QUERY_STRING} [L]
+RewriteRule ^fiber/(.*)-([0-9]+)/type_(g|l)$ index\.php?main_page=fiber_categories&con=$2&type=$3&%{QUERY_STRING} [L]
+RewriteRule ^fiber-(.*)-([0-9]+)$ index\.php?main_page=fiber_categories&con=$2&%{QUERY_STRING} [L]
+RewriteRule ^fiber/(.*)-([0-9]+)$ index\.php?main_page=fiber_categories&con=$2&page=$3&%{QUERY_STRING} [L]
+
+
+
+
+#RewriteRule ^(.*)-c-(.*)\.html$ index\.php?main_page=index&cPath=$2&%{QUERY_STRING} [L]
+#rewrite plus,ignore blog
+#RewriteRule ^(?!blog)(.*)-c(.*)-c(.*)-c(.*)$ index\.php?main_page=index&cPath=$4&%{QUERY_STRING} [L]
+#RewriteRule ^(?!blog)(.*)-c(.*)-c(.*)-n(.*)$ index\.php?main_page=index&cPath=$3&narrow=$4&%{QUERY_STRING} [L]
+#RewriteRule ^(?!blog)(.*)-c(.*)-c(.*)$ index\.php?main_page=index&cPath=$3&%{QUERY_STRING} [L]
+#RewriteRule ^(?!blog)(.*)-c(.*)-n(.*)$ index\.php?main_page=index&cPath=$2&narrow=$3&%{QUERY_STRING} [L]
+#RewriteRule ^(?!blog)(.*)-c(.*)$ index\.php?main_page=index&cPath=$2&%{QUERY_STRING} [L]
+
+
+#products tags
+RewriteRule ^producttags/([-\w]+)/$ index\.php?main_page=producttags&letter=$1&%{QUERY_STRING} [L]
+
+RewriteRule ^producttags/(.*)/([0-9]+).html$ index\.php?main_page=producttags&letter=$1&page=$2&%{QUERY_STRING} [L]
+
+#bend_insensitive
+
+RewriteRule ^bend-insensitive-fiber-cables\.html$ index\.php?main_page=bend_insensitive_fiber_cables [L]
+RewriteRule ^reversible-polarity-lc-uniboot-patch-cable\.html$ index\.php?main_page=reversible_polarity_lc_uniboot_patch_cable [L]
+
+# All other pages
+# Don't rewrite real files or directories
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(?!blog)(.*).html$ index\.php?main_page=$1&%{QUERY_STRING} [L]
+
+
+#begin error handing
+
+
+ErrorDocument 403 /not_found_403.html
+ErrorDocument 404 /404.html
+ErrorDocument 500 /server_error_500.html
+#end error handing
+
+<Files 403.shtml>
+order allow,deny
+allow from all
+</Files>
+

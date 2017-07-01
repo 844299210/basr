@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="gss.xsl"?>
+<sitemapindex xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd"
+        xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+ <sitemap>
+  <loc>http://beta.fiberstore.com/sitemapOfproducts_article.xml.gz</loc>
+  <lastmod>2015-01-25</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://beta.fiberstore.com/sitemapOfpopular list.xml.gz</loc>
+  <lastmod>2015-03-04</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://beta.fiberstore.com/sitemapOfnews.xml.gz</loc>
+  <lastmod>2015-03-04</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://beta.fiberstore.com/sitemapOfall_review.xml.gz</loc>
+  <lastmod>2015-01-25</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://beta.fiberstore.com/sitemapOfnarrow_by.xml.gz</loc>
+  <lastmod>2015-03-04</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://beta.fiberstore.com/sitemapOfpopular keyword.xml.gz</loc>
+  <lastmod>2015-03-04</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://beta.fiberstore.com/sitemapOftutarial.xml.gz</loc>
+  <lastmod>2015-03-04</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://beta.fiberstore.com/sitemapOffiberstore article.xml.gz</loc>
+  <lastmod>2015-03-04</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://beta.fiberstore.com/sitemapOfother_narrow_by.xml.gz</loc>
+  <lastmod>2015-03-04</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://beta.fiberstore.com/sitemapOfcategories.xml.gz</loc>
+  <lastmod>2015-01-25</lastmod>
+ </sitemap>
+ <sitemap>
+  <loc>http://beta.fiberstore.com/sitemapOfproducts.xml.gz</loc>
+  <lastmod>2015-03-04</lastmod>
+ </sitemap>
+</sitemapindex>

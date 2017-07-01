@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>FiberStore is under maintenance ...</title>
+<style>
+body { margin:0 auto; padding:0; background:#FFF; font-size:11px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#363636; }
+</style>
+<script language="JavaScript">
+<!-- //
+var overDate = 1000 * 60 * 30;
+var NowTime = new Date(2012,5,3,13,40,0);
+var EndTime= new Date(2012,05,04,20,31); 
+var EndTime= new Date(NowTime.getTime() + overDate);
+var EndTimeMsg = EndTime.getFullYear() + "年";
+EndTimeMsg = EndTimeMsg + (EndTime.getMonth()+1) + "月";
+EndTimeMsg = EndTimeMsg + (EndTime.getDate()) + "日";
+EndTimeMsg = EndTimeMsg + (EndTime.getHours()) + "时";
+EndTimeMsg = EndTimeMsg + (EndTime.getMinutes()) + "分";
+EndTimeMsg = EndTimeMsg + (EndTime.getSeconds()) + "秒";
+function GetRTime(){
+
+	NowTime = new Date();
+	var nMS=EndTime.getTime() - NowTime.getTime();
+	var nD=Math.floor(nMS/(1000 * 60 * 60 * 24));
+	var nH=Math.floor(nMS/(1000*60*60)) % 24;
+	var nM=Math.floor(nMS/(1000*60)) % 60;
+	var nS=Math.floor(nMS/1000) % 60;
+	var nMS=Math.floor(nMS/100) % 10;
+	if(nD>= 0){
+		/*document.getElementById("RemainD").innerHTML=nD;
+		document.getElementById("RemainH").innerHTML=nH;*/
+		document.getElementById("RemainM").innerHTML=nM;
+		document.getElementById("RemainS").innerHTML=nS + "." + nMS;
+	}
+	else {
+		//document.getElementById("CountMsg").innerHTML=　EndTimeMsg +"已过！";
+	}
+	setTimeout("GetRTime()",100);
+}
+window.onload=function(){
+    //document.getElementById("EndTimeMsg").innerHTML = EndTimeMsg;
+	GetRTime();
+}
+// -->
+</script>
+</head>
+
+<body>
+
+<div style=" margin:0 auto; width:900px; padding-bottom:5px; border-bottom: 2px solid #C50001; ">
+
+<img src="images/logo.jpg" />
+</div>
+<div style=" margin:120px auto 280px auto; width:560px; ">
+<div id="CountMsg" style=" text-align:center; font-size:20px; padding:10px; border:1px solid #f6f6f6; margin-bottom:50px;">
+FiberStore will be online in
+	<!--<strong id="EndTimeMsg">XX</strong>-->
+
+	<!--<strong id="RemainD">XX</strong>天
+	<strong id="RemainH">XX</strong>时-->
+	<strong id="RemainM">XX</strong> M
+	<strong id="RemainS">XX</strong> S
+</div>
+<img src="images/nopage_01.jpg" alt="nopage" style=" float:left;" /><div style=" display:block; width:320px; float:left; line-height:20px; padding-left:10px;"><span style=" font-size:12px; font-weight:bold; line-height:30px; color:#363636;">Sorry, the website is under maintenance . <br />It will be online as soon as possible<br />Please contact us: <span style=" color:#c50001;">+86-755-83003611</span> or <br />Email us at <a style=" color:#c50001;" href="mailto:sales@fiberstore.com">sales@fiberstore.com</a> for help.</span>
+	</div>
+	<div style=" clear:both;"></div>
+</div>
+<div style="background: none repeat scroll 0 0 #E2E2E2;
+    border-top: 1px solid #CDCDCD; height:50px; line-height:50px; text-align:center;">Copyright @ 2006-2012 FiberStore Co., Ltd. All Rights Reserved.</div>
+</body>
+</html>

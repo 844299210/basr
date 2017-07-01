@@ -1,0 +1,130 @@
+<?php 
+if(isset($_GET['event'])){
+	require 'includes/application_top.php';
+	$event_date = $_GET['event'];
+	$page = empty($_GET["page"]) ? 1:$_GET["page"];
+	$sql = "select count(*) from ".TABLE_NEWS_ARTICLES_TEXT." as nat left join ".TABLE_NEWS_ARTICLES." as na on nat.article_id = na.article_id 
+				  where na.news_status = 1 and nat.language_id = ".$_SESSION['languages_id']." ";
+	$count = $db->Execute($sql);
+	if ($count->RecordCount()){
+		while(!$count->EOF){
+			$counts = array(
+				'count' => $count->fields['count(*)']
+			);
+			$count->MoveNext();
+	
+		}
+	}		
+	$totle = $counts['count'];
+	$page_size = 20;
+	$page_atart = ($page-1)*$page_size ==0 ? 1:($page-1)*$page_size+1;
+	
+	
+	
+	global $db;
+	$event_sql = "select nat.article_id, nat.news_article_name, nat.news_article_text, na.news_date_published, na.news_image, na.news_image_two from ".TABLE_NEWS_ARTICLES_TEXT." as nat left join ".TABLE_NEWS_ARTICLES." as na on nat.article_id = na.article_id 
+			  where na.news_status = 1 and nat.language_id = ".$_SESSION['languages_id']." ";
+	if(isset($event_date)){
+		$event_sql.= "AND date_format(na.news_date_published,'%Y') = ".$event_date." ";
+	}
+	$event_sql.= "order by na.news_date_published desc";
+
+	$event_result = $db->Execute($event_sql);
+	if ($event_result->RecordCount()){
+		while(!$event_result->EOF){
+			$events_array[] = array(
+				'article_id' => $event_result->fields['article_id'],
+				'text_url' => zen_href_link(FILENAME_NEWS_ARTICLE,'&article_id='.$event_result->fields['article_id']),
+				'news_article_name' => $event_result->fields['news_article_name'],
+				'news_date_published' => date('M d,Y',strtotime($event_result->fields['news_date_published'])),
+				'news_image' => 'images/'.$event_result->fields['news_image'],
+				'news_article_text' => substr(strip_tags($event_result->fields['news_article_text']),0,120)
+			);
+			$event_result->MoveNext();
+		}
+	}		
+	}
+	
+	function show_page($count,$page,$page_size){
+    $page_count  = ceil($count/$page_size);  //计算得出总页数
+    $init=1;
+    $page_len=7;
+    $max_p=$page_count;
+    $pages=$page_count;
+ 
+    //判断当前页码
+    $page=(empty($page)||$page<0)?1:$page;
+    //获取当前页url
+    $url = $_SERVER['REQUEST_URI'];
+    //去掉url中原先的page参数以便加入新的page参数
+    $parsedurl=parse_url($url);
+    $url_query = isset($parsedurl['query']) ? $parsedurl['query']:'';
+    if($url_query != ''){
+        $url_query = preg_replace("/(^|&)page=$page/",'',$url_query);
+        $url = str_replace($parsedurl['query'],$url_query,$url);
+        if($url_query != ''){
+            $url .= '&';
+        }
+    } else {
+        $url .= '?';
+    }
+     
+    //分页功能代码
+    $page_len = ($page_len%2)?$page_len:$page_len+1;  //页码个数
+    $pageoffset = ($page_len-1)/2;  //页码个数左右偏移量
+    $page_atart = ($page-1)*$page_size ==0 ? 1:($page-1)*$page_size+1;
+    $page_end = ($page)*$page_size >$count ? $count:($page)*$page_size;
+
+    $navs='';
+    if($pages != 0){
+        if($page!=1){
+        	$navs.="Show <strong>".$page_atart."</strong> to <strong>".$page_end."</strong> (of <strong>".$count."</strong> News )&nbsp;&nbsp;&nbsp;";
+            $navs.="<b>Page:</b> <a href=\"".$url."page=".($page-1)."\" class='previous_page'>Prev</a>&nbsp;";        //上一页
+        } else {
+        	$navs.="Show <strong>".$page_atart."</strong> to <strong>".$page_end."</strong> (of <strong>".$count."</strong> News )&nbsp;&nbsp;&nbsp;";
+            $navs.="<b>Page:</b> <span class='previous_page'>rev</span>&nbsp;";        //上一页
+        }
+        if($pages>$page_len)
+        {
+            //如果当前页小于等于左偏移
+            if($page<=$pageoffset){
+                $init=1;
+                $max_p = $page_len;
+            }
+            else  //如果当前页大于左偏移
+            {    
+                //如果当前页码右偏移超出最大分页数
+                if($page+$pageoffset>=$pages+1){
+                    $init = $pages-$page_len+1;
+                }
+                else
+                {
+                    //左右偏移都存在时的计算
+                    $init = $page-$pageoffset;
+                    $max_p = $page+$pageoffset;
+                }
+            }
+        }
+        
+        for($i=$init;$i<=$max_p;$i++)
+        {
+            if($i==$page){$navs.="<span class='current'>".$i.'</span>';} 
+            else {$navs.=" <a href=\"".$url."page=".$i."\">".$i."</a>";}
+        }
+        if($page!=$pages)
+        {
+            $navs.=" <a class='next_page' href=\"".$url."page=".($page+1)."\" title='Next Page'>Next</a>&nbsp";//下一页
+        } else {
+            $navs.=" <span class='next_page'>Next</span>&nbsp";//下一页
+        }
+        return $navs;
+   }
+}
+
+$page_list = show_page($totle,$page,$page_size);
+	
+	
+echo json_encode($events_array); 
+
+
+?>

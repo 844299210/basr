@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<employees>
+<employee>
+<name>张三</name>
+<position age="45">经理</position>
+</employee>
+<employees>
+<employee>
+<name>李四</name>
+<position age="45">助理</position>
+</employee>
+</employees>
