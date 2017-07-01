@@ -144,5 +144,5 @@ if (!empty($_POST['product_id']) && !empty($_POST['price']) && !empty($_POST['qt
         default;
     }
 } else {
-    echo "No parameters";
+    echo "No parameterss";
 }
